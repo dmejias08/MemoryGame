@@ -2,7 +2,9 @@
 #include "server.h"
 
 Server::Server(){
-        server= socket(AF_INET, SOCK_STREAM, 0);
+    char *buffer_trasmiter= new char[1024];
+    buffer_trasmiter = "Hola Dario, soy server";
+    server= socket(AF_INET, SOCK_STREAM, 0);
     if(server < 0){
         perror("socket failed");
         exit(EXIT_FAILURE);
@@ -26,7 +28,7 @@ Server::Server(){
     }else{
         std::cout<<"Bind succesfully"<<std::endl;
     }
-
+    
     //Listen request from client
     if (listen(server, 3) < 0)
     {
@@ -63,11 +65,13 @@ Server::Server(){
                 break;
             }else{
                 write(new_socket,buffer_trasmiter,strlen(buffer_trasmiter));
-                std::cout<<"SERVER"<<buffer_trasmiter<<std::endl;
+                std::cout<<"SERVER"<<buffer_reciever<<std::endl;
+                handeling_message(buffer_reciever);
             }
         }
     }
 }
-void Server::handeling_message(char[]){
+void Server::handeling_message(char message[1024]){
+    std::cout<<"Mensaje: "<<message<<" en handeling message"<<std::endl;
 // this method is going to read the message and redirect it to the method it needs to go
 }

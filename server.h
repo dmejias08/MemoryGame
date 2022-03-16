@@ -22,12 +22,11 @@ class Server{
     unsigned int client_len;
     int opt;
     int server_len;
-    char buffer_trasmiter[1024];
     char buffer_reciever[1024];
 
 
     public:
     Server();
-    void handeling_message(char[]);
+    void handeling_message(char message[1024]);
 };
 #endif
