@@ -1,5 +1,5 @@
-#ifndef server_h
-#define server_h
+#ifndef client_h
+#define client_h
 
 #include <unistd.h>
 #include <stdio.h>

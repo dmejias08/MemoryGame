@@ -13,10 +13,7 @@ void Client::conexion(){
     sock = socket(AF_INET, SOCK_STREAM, 0);
     if ( sock < 0)
     {
-        std::cout<<"\n Socket creation error \n"<<std::endl;
-
-        printf("\n Socket creation error \n");
-        
+        std::cout<<"\n Socket creation error \n"<<std::endl; 
     }else{
         std::cout<<"\n Socket connection succesfully \n"<<std::endl;
         //printf("Socket connection succesfully");
@@ -25,13 +22,13 @@ void Client::conexion(){
       
     if (connect(sock, (struct sockaddr *)&serverAddress, sizeof(serverAddress)) < 0)
     {
-        std::cout<<"Connection failed"<<std::endl;
-        //printf("\nConnection Failed \n");
+        std::cout<<"\n Connection failed \n"<<std::endl;
+    }else{
+        std::cout<<"\n Connection to server succesfully \n"<<std::endl;
     }
 
     write(sock,buffer_trasmiter, strlen(buffer_trasmiter));
-    std::cout<<"Hello message sent\n"<<std::endl;
-    //printf("Hello message sent\n");
+    std::cout<<"\n Hello message sent \n"<<std::endl;
     len_response = read(sock, buffer_reciever, sizeof(buffer_reciever));
     if(len_response==-1){
         std::cout<<"Could not read message"<<std::endl;

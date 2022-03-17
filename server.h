@@ -10,6 +10,7 @@
 #include <iostream>
 #include <netdb.h>
 #include <arpa/inet.h>
+#include <string>
 #define PORT 8080
 #define server_ip "192.168.0.10"
 
@@ -28,5 +29,6 @@ class Server{
     public:
     Server();
     void handeling_message(char message[1024]);
+
 };
 #endif

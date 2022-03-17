@@ -4,14 +4,14 @@
 Server::Server(){
     char *buffer_trasmiter= new char[1024];
     buffer_trasmiter = "Hola Dario, soy server";
+    
     server= socket(AF_INET, SOCK_STREAM, 0);
     if(server < 0){
-        perror("socket failed");
-        exit(EXIT_FAILURE);
+        std::cout<<"\n Error initializing server \n"<<std::endl;
     }else{
-        std::cout<<"Initialize server succesfullly"<<std::endl;
-        //printf("Initialize server succesfullly");
+        std::cout<<"\n Initialize server succesfullly \n"<<std::endl;
     }
+
     //Cleaning struct
     memset(&server_address,0, sizeof(server_len));
     //Initialize struct 
@@ -20,23 +20,19 @@ Server::Server(){
     server_address.sin_port = htons( PORT );
        
     //Bind the socket to the local port 
-    if (bind(server, (struct sockaddr *)&server_address, 
-                                 sizeof(server_address))<0)
+    if (bind(server, (struct sockaddr *)&server_address, sizeof(server_address))<0)
     {
-        perror("bind failed");
-        exit(EXIT_FAILURE);
+        std::cout<<"\n Bind error \n"<<std::endl;
     }else{
-        std::cout<<"Bind succesfully"<<std::endl;
+        std::cout<<"\n Bind succesfully \n"<<std::endl;
     }
     
     //Listen request from client
     if (listen(server, 3) < 0)
     {
-        perror("listen");
-        exit(EXIT_FAILURE);
+        std::cout<<"\n Error listening \n"<<std::endl;
     }else{
-        std::cout<<"Started to listen"<<std::endl;
-        //printf("Started to listen");
+        std::cout<<"\n Started to listen \n"<<std::endl;
     }
 
 
@@ -47,10 +43,9 @@ Server::Server(){
         new_socket = accept(server, (struct sockaddr *)&client_address, &client_len);
         if(new_socket <0)                   
         {
-            perror("accept");
-            exit(EXIT_FAILURE);
+            std::cout<<"\n Error to accept client \n"<<std::endl;
         }else{
-            std::cout<<"CLient accepted"<<std::endl;
+            std::cout<<"\n CLient accepted \n"<<std::endl;
         }
     
 
