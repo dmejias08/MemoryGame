@@ -16,7 +16,6 @@ void Client::conexion(){
         std::cout<<"\n Socket creation error \n"<<std::endl; 
     }else{
         std::cout<<"\n Socket connection succesfully \n"<<std::endl;
-        //printf("Socket connection succesfully");
         
     }
       

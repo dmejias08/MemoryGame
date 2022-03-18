@@ -26,16 +26,16 @@ Card* Memory_managment::get_from_csv(string n){
                     cout<<word<<endl;
                     for(int j=0;j<3; j++){
                         getline(str,word,',');
-                        cout<<word<<endl;
+                        // cout<<word<<endl;
                         if (j == 0){
                             name = word;
-                            cout<<word<<endl;
+                            // cout<<word<<endl;
                         }else if (j == 1){
                             img = word;
-                            cout<<word<<endl;
+                            // cout<<word<<endl;
                         }else if(j == 2){
                             status = word;
-                            cout<<word<<endl;
+                            // cout<<word<<endl;
                         }
                     }
                     Card* card = new Card(id,name,img,status);
@@ -53,23 +53,16 @@ Card* Memory_managment::get_from_csv(string n){
 
 // }
 void Memory_managment::generateVector(){
-    // int N = 5;
-    cout<<"hola"<<endl;
-    Card *card =  get_from_csv("3");
-    card->print();
-    this->vector_card.push_back(card);
+    int N = 5;
 
-    // for (int i = 0; i < N; i++){
-    //     std::string id = to_string(i);
-    //     Card card = get_from_csv(id);
-    //     this->vector_card.push_back(card);
-    // }
+    for (int i = 0; i < N; i++){
+        std::string id = to_string(i);
+        Card *card = get_from_csv(id);
+        this->vector_card.push_back(card);
+    }
+
+    for(int j=0; j < N ; j++){
+        vector_card[j]->print();
+    }
    
-
-// vector_card.push_back(Card("1","perro", "perro.png","0"));
-// vector_card.push_back(Card("1","perro", "perro.png","0"));
-    // for (int j = 0; j<=1; j++){
-    //     this->vector_card[j].print();
-    // }
-
 }
