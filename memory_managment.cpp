@@ -8,46 +8,43 @@
 #include <sstream>
 
 using namespace std;
+fstream file;
 
-Card* Memory_managment::get_from_csv(string n){
-    fstream file;
-    string line, word, name,id, img, status;
+struct simple_card
+{
+    int i, j, type, status;
+};
 
-    file.open("example.csv", ios::in | ios::out);
 
-        if(file.is_open()){
+Card* Memory_managment::getCard(int i, int j){
+    // cout<<"estoy en get card"<<endl;
+    file.open("binary.txt", ios::in | ios::out | ios::binary);
+        // if(file.is_open()){
+            // cout<<"EStoy en file"<<endl;
+            char *buffer = (char*) malloc(sizeof(simple_card));
+            file.seekg((i-1)*(4)*sizeof(simple_card)+(j-1)*sizeof(simple_card), ios::beg);
+            file.read(buffer, sizeof(simple_card));
+            simple_card* card = (simple_card*) buffer;
+            cout<<card->i<<" "<<card->j<<" "<<card->type<<" "<<card->status<<endl;
+            file.close();
+            
+        // }
+}
 
-            for(int i =0; i<= 10; i++){
-                getline(file, line);//read every line 
-                stringstream str(line); //separate the line
-                getline(str,word,','); //takes every word
-                if (word == n){
-                    id = word;
-                    cout<<word<<endl;
-                    for(int j=0;j<3; j++){
-                        getline(str,word,',');
-                        // cout<<word<<endl;
-                        if (j == 0){
-                            name = word;
-                            // cout<<word<<endl;
-                        }else if (j == 1){
-                            img = word;
-                            // cout<<word<<endl;
-                        }else if(j == 2){
-                            status = word;
-                            // cout<<word<<endl;
-                        }
-                    }
-                    Card* card = new Card(id,name,img,status);
-                    // card.print();
-                    file.close();
-                    return card;
-                    break;
-                    
-                }
-                
-            }
-        }
+void Memory_managment::setCard(int i, int j, int type, int status){
+    simple_card card;
+    card.i = i;
+    card.j = j;
+    card.type = type;
+    card.status = status;
+    file.open("binary.txt", ios::in | ios::out | ios::binary);
+    //if(file.is_open()){
+        // cout<<"EStoy en setCard"<<endl;
+        file.seekg(((i-1)*(4)*sizeof(simple_card)+(j-1)*sizeof(simple_card)),ios::beg);
+        file.write((char*)&card, sizeof(simple_card));
+        file.close();
+    // }
+    
 }
 // void Memory_managment::get_card(int i, int j){
 
@@ -57,8 +54,8 @@ void Memory_managment::generateVector(){
 
     for (int i = 0; i < N; i++){
         std::string id = to_string(i);
-        Card *card = get_from_csv(id);
-        this->vector_card.push_back(card);
+        //Card *card = get_from_csv(id);
+        //this->vector_card.push_back(card);
     }
 
     for(int j=0; j < N ; j++){

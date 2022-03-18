@@ -1,7 +1,7 @@
 #include "card.h"
 #include <string>
 
-Card::Card(std::string id, std::string name, std::string img, std::string status){
+Card::Card(int id, int name, int img, int status){
     this->id = id;
     this->name = name;
     this->img = img;

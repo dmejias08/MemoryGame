@@ -15,10 +15,10 @@
 class Card{
 
     private:
-    std::string name, img, id, status;
+    int name, img, id, status;
 
     public:
-    Card(std::string id, std::string name, std::string img, std::string status);//create a card object
+    Card(int id, int name, int img, int status);//create a card object
      void print();
 
 };

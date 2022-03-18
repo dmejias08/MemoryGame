@@ -25,8 +25,8 @@ class Memory_managment{
     public:
     // void get_card(int i, int j);
     void generateVector();
-    Card* get_from_csv(std::string id); // if there is not card in matrix get it from the csv or to create a matrix
-
+    Card* getCard(int i, int j); // if there is not card in matrix get it from the csv or to create a matrix
+    void setCard(int i, int j, int type, int status);
 
 };
 
