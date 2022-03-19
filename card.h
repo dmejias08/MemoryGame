@@ -11,15 +11,21 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 #include <string>
+using namespace std;
+
+
 
 class Card{
 
     private:
-    int name, img, id, status;
+    int i, j, type, status;
+    string img;
+    //unsigned char byte_array[1000] = {0};
 
     public:
-    Card(int id, int name, int img, int status);//create a card object
-     void print();
+    Card(int i , int j , int type , int status);
+    void get_image(int type);
+    void print();
 
 };
 

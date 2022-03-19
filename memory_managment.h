@@ -20,13 +20,14 @@
 class Memory_managment{
 
     private:
-    std::vector<Card*> vector_card;
+    std::vector<Card> vector_card;
 
     public:
     // void get_card(int i, int j);
-    void generateVector();
-    Card* getCard(int i, int j); // if there is not card in matrix get it from the csv or to create a matrix
-    void setCard(int i, int j, int type, int status);
+    void generate_vector();
+    void create_file();
+    Card get_card_from_file(int i, int j); // if there is not card in matrix get it from the csv or to create a matrix
+    void set_card_to_file(int i, int j, int type, int status);
 
 };
 
