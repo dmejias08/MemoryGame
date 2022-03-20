@@ -14,7 +14,7 @@ struct simple_card
 {
     int i, j, type, status;
 };
-char *buffer = (char*) malloc(sizeof(simple_card));
+
 
 Card Memory_managment::get_card_from_file(int i, int j){
     // cout<<"estoy en get card"<<endl;
@@ -32,6 +32,8 @@ Card Memory_managment::get_card_from_file(int i, int j){
             cout<<"Estoy despues de get image"<<endl;
             file.close();
             new_card.print();
+            free(buffer);
+            buffer = NULL;
             return new_card;
         // }
 }
@@ -49,21 +51,36 @@ void Memory_managment::set_card_to_file(int i, int j, int type, int status){
         file.seekg(((i-1)*(4)*sizeof(simple_card)+(j-1)*sizeof(simple_card)),ios::beg);
         file.write((char*)&card, sizeof(simple_card));
         file.close();
-        // free(buffer);
+        
     // }
     
 }
 // void Memory_managment::get_card(int i, int j){
 
 // }
+
+//arregar este metodo
 void Memory_managment::generate_vector(){
-    for(int i = 1 ; i < 3; i++){
-        for(int j = 1; i<=5; j++){
+    for(int i = 1 ; i <= 2; i++){
+        for(int j = 1; j<=5; j++){
             this->vector_card.push_back(get_card_from_file(i,j));
+            // this->vector_card.push_back(get_card_from_file(1,2));
+            // this->vector_card.push_back(get_card_from_file(1,3));
+            // cout<<"estoy en generate vector"<<endl;
+            // this->vector_card[0].print();
+            // this->vector_card[1].print();
+            // this->vector_card[2].print();
         }
     }
-    for(int n = 0; n<10; n++){
-        vector_card[n].print();
+    // for(int n = 0; n<10; n++){
+    //     vector_card[n].print();
+    // }
+}
+
+
+void Memory_managment::print_vector(){
+    for(int n = 0; n < 10; n++){
+        this->vector_card[n].print();
     }
 }
 
