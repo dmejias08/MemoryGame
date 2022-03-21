@@ -29,5 +29,5 @@ void Card::get_image(int type){
     }
 }
 void Card::print(){
-    std::cout<<this->type<<" "<<this->img<<std::endl;
+    std::cout<<this->type<<" "<<this->img<<" "<<this->status<<std::endl;
 }

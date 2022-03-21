@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <cstdlib>
+#include <stdlib.h>
 
 
 using namespace std;
@@ -20,18 +22,17 @@ Card Memory_managment::get_card_from_file(int i, int j){
     // cout<<"estoy en get card"<<endl;
     file.open("binary.txt", ios::in | ios::out | ios::binary);
         // if(file.is_open()){
-            cout<<"Estoy en file"<<endl;
+            // cout<<"Estoy en file"<<endl;
             file.seekg((i-1)*(4)*sizeof(simple_card)+(j-1)*sizeof(simple_card), ios::beg);
             char *buffer = (char*) malloc(sizeof(simple_card));
             file.read(buffer, sizeof(simple_card));
             simple_card* card = (simple_card*) buffer;
-            // cout<<card->i<<" "<<card->j<<" "<<card->type<<" "<<card->status<<endl;
             Card new_card = Card(card->i,card->j, card->type, card->status);
-            cout<<"Estoy despues de card"<<endl;
+            // cout<<"Estoy despues de card"<<endl;
             new_card.get_image(card->type);
-            cout<<"Estoy despues de get image"<<endl;
-            file.close();
+            // cout<<"Estoy despues de get image"<<endl;
             new_card.print();
+            file.close();
             free(buffer);
             buffer = NULL;
             return new_card;
@@ -39,7 +40,7 @@ Card Memory_managment::get_card_from_file(int i, int j){
 }
 
 void Memory_managment::set_card_to_file(int i, int j, int type, int status){
-    cout<<"Estoy en set card"<<endl;
+    // cout<<"Estoy en set card"<<endl;
     simple_card card;
     card.i = i;
     card.j = j;
@@ -55,35 +56,53 @@ void Memory_managment::set_card_to_file(int i, int j, int type, int status){
     // }
     
 }
-// void Memory_managment::get_card(int i, int j){
+Card Memory_managment::get_card(int i, int j){
+    for(int n; n<10; n++){
+        if (this->vector_card[n].i == i && this->vector_card[n].j == j){
+            this->vector_card[n].print();
+            return this->vector_card[n];
+        }
+    }
+    cout<<"No estaba en file"<<endl;
+    // if not
+    Card card = replace(i,j);
+    return card;
+}
 
-// }
+Card Memory_managment::replace(int i, int j){
+    int n = rand()%10;
+    cout<<"Numero random es "<<n<<endl;
+    cout<<"El vector es ";
+    this->vector_card[n].print();
+    int old_i = this->vector_card[n].i;
+    int old_j = this->vector_card[n].j;
+    int old_type = this->vector_card[n].type;
+    int old_status = this->vector_card[n].status;
+    set_card_to_file(old_i, old_j, old_type, old_status);
+    this->vector_card.erase(this->vector_card.begin()+n);
+    // this->vector_card[n].print();
+    Card card = get_card_from_file(i,j);
+    this->vector_card.push_back(card);
+    cout<<"Imprimir nueva clase"<<endl;
+    this->vector_card[9].print();
+    cout<<"Imprimir vector"<<endl;
+    this->print_vector();
+    return card;
 
-//arregar este metodo
+}
+
 void Memory_managment::generate_vector(){
     for(int i = 1 ; i <= 2; i++){
         for(int j = 1; j<=5; j++){
             this->vector_card.push_back(get_card_from_file(i,j));
-            // this->vector_card.push_back(get_card_from_file(1,2));
-            // this->vector_card.push_back(get_card_from_file(1,3));
-            // cout<<"estoy en generate vector"<<endl;
-            // this->vector_card[0].print();
-            // this->vector_card[1].print();
-            // this->vector_card[2].print();
         }
     }
-    // for(int n = 0; n<10; n++){
-    //     vector_card[n].print();
-    // }
 }
-
-
 void Memory_managment::print_vector(){
     for(int n = 0; n < 10; n++){
         this->vector_card[n].print();
     }
 }
-
 void Memory_managment::create_file(){
     int n = 1;
     for (int i = 1; i <= 6; i++){

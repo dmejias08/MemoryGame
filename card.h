@@ -17,12 +17,10 @@ using namespace std;
 
 class Card{
 
-    private:
+    public:
     int i, j, type, status;
     string img;
     //unsigned char byte_array[1000] = {0};
-
-    public:
     Card(int i , int j , int type , int status);
     void get_image(int type);
     void print();

@@ -23,7 +23,8 @@ class Memory_managment{
     std::vector<Card> vector_card;
 
     public:
-    // void get_card(int i, int j);
+    Card get_card(int i, int j);
+    Card replace(int i, int j);
     void generate_vector();
     void create_file();
     Card get_card_from_file(int i, int j); // if there is not card in matrix get it from the csv or to create a matrix
