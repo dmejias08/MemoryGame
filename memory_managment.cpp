@@ -31,6 +31,7 @@ Card Memory_managment::get_card_from_file(int i, int j){
             // cout<<"Estoy despues de card"<<endl;
             new_card.get_image(card->type);
             // cout<<"Estoy despues de get image"<<endl;
+            cout<<"Card from file: ";
             new_card.print();
             file.close();
             free(buffer);
@@ -56,36 +57,59 @@ void Memory_managment::set_card_to_file(int i, int j, int type, int status){
     // }
     
 }
+
+// bool Memory_managment::find_card_vector(int i, int j){
+    // bool result = false;
+    // for(int n; n<10; n++){
+        // if (this->vector_card[n].i == i && this->vector_card[n].j == j){
+            // cout<<"El vector se encontro"<<endl;
+            // this->vector_card[n].print();
+            // result = true;
+
+        // }
+    // }return result;
+// }
+
 Card Memory_managment::get_card(int i, int j){
-    for(int n; n<10; n++){
+    int flag = 1;
+
+    for(int n = 0; n<10; n++){
         if (this->vector_card[n].i == i && this->vector_card[n].j == j){
+            cout<<"Found object in vector: ";
+            this->vector_card[n].print();
+            flag = 0;
+            cout<<"return object ";
             this->vector_card[n].print();
             return this->vector_card[n];
         }
     }
-    cout<<"No estaba en file"<<endl;
-    // if not
+    
+    cout<<"value of flag "<<flag<<endl;
+    if (flag == 1){
+    cout<<"Did not find object in vector "<<endl;
     Card card = replace(i,j);
     return card;
+    }
 }
 
 Card Memory_managment::replace(int i, int j){
     int n = rand()%10;
-    cout<<"Numero random es "<<n<<endl;
-    cout<<"El vector es ";
+    cout<<"Delete position "<<n<<endl;
+    cout<<"object deleted ";
     this->vector_card[n].print();
+
     int old_i = this->vector_card[n].i;
     int old_j = this->vector_card[n].j;
     int old_type = this->vector_card[n].type;
     int old_status = this->vector_card[n].status;
     set_card_to_file(old_i, old_j, old_type, old_status);
     this->vector_card.erase(this->vector_card.begin()+n);
-    // this->vector_card[n].print();
+
     Card card = get_card_from_file(i,j);
     this->vector_card.push_back(card);
-    cout<<"Imprimir nueva clase"<<endl;
+    cout<<"New object is: "<<endl;
     this->vector_card[9].print();
-    cout<<"Imprimir vector"<<endl;
+    cout<<"New vector is: "<<endl;
     this->print_vector();
     return card;
 
