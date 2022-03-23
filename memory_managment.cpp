@@ -57,19 +57,6 @@ void Memory_managment::set_card_to_file(int i, int j, int type, int status){
     // }
     
 }
-
-// bool Memory_managment::find_card_vector(int i, int j){
-    // bool result = false;
-    // for(int n; n<10; n++){
-        // if (this->vector_card[n].i == i && this->vector_card[n].j == j){
-            // cout<<"El vector se encontro"<<endl;
-            // this->vector_card[n].print();
-            // result = true;
-
-        // }
-    // }return result;
-// }
-
 Card Memory_managment::get_card(int i, int j){
     int flag = 1;
 
@@ -114,7 +101,6 @@ Card Memory_managment::replace(int i, int j){
     return card;
 
 }
-
 void Memory_managment::generate_vector(){
     for(int i = 1 ; i <= 2; i++){
         for(int j = 1; j<=5; j++){

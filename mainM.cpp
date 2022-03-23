@@ -22,12 +22,12 @@ int main(){
     memory->print_vector();
 
     cout<<"****************************************"<<endl;
-    memory->get_card_from_file(7,1);
-    memory->get_card_from_file(1,1);
+    memory->get_card_from_file(1,4);
+    memory->get_card_from_file(2,3);
     cout<<"****************************************"<<endl;
-    memory->get_card(1,1);
+    memory->get_card(2,3);
     cout<<"****************************************"<<endl;
-    memory->get_card(7,1);
+    memory->get_card(1,4);
     cout<<"****************************************"<<endl;
     delete memory;
 }

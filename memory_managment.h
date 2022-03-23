@@ -21,6 +21,7 @@ class Memory_managment{
 
     private:
     std::vector<Card> vector_card;
+    
 
     public:
     Card get_card(int i, int j);
@@ -30,6 +31,7 @@ class Memory_managment{
     Card get_card_from_file(int i, int j); // if there is not card in matrix get it from the csv or to create a matrix
     void set_card_to_file(int i, int j, int type, int status);
     void print_vector();
+    void shuffle();
 
 };
 
