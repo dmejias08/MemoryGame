@@ -1,9 +1,9 @@
 
 #include "server.h"
-
+#include "game.h"
 Server::Server(){
     char *buffer_trasmiter= new char[1024];
-    buffer_trasmiter = "Hola Dario, soy server";
+    // buffer_trasmiter = "Hola Dario, soy server";
     
     server= socket(AF_INET, SOCK_STREAM, 0);
     if(server < 0){
@@ -59,14 +59,42 @@ Server::Server(){
                 close(new_socket);
                 break;
             }else{
-                write(new_socket,buffer_trasmiter,strlen(buffer_trasmiter));
+                // write(new_socket,buffer_trasmiter,strlen(buffer_trasmiter));
                 std::cout<<"SERVER"<<buffer_reciever<<std::endl;
-                handeling_message(buffer_reciever);
+                // handeling_message(buffer_reciever);
+                buffer_trasmiter = handeling_message(buffer_reciever);
+                write(new_socket,buffer_trasmiter,strlen(buffer_trasmiter));
+                // buffer_trasmiter =funtion that retruns a message from handeling message 
             }
         }
     }
 }
-void Server::handeling_message(char message[1024]){
+char* Server::handeling_message(char message[1024]){
     std::cout<<"Mensaje: "<<message<<" en handeling message"<<std::endl;
+    int pos1;
+    int pos2;
+    //position arrives 
+    int i;
+    sscanf(message, "%d", i);
+    std::cout<<"estoy en sever pos es "<<i<<std::endl;
+    
+    if(pos1 == 0){
+        pos1 = i;
+    }else if(pos2 == 0){
+        pos2 = i;
+    }else{
+
+        char *response = new char[1024];
+        response =(char*)this->game.check_equals(pos1,pos2); ;
+        return response;
+    }
+
+    
+
+   
+   
+   
+    
+
 // this method is going to read the message and redirect it to the method it needs to go
 }

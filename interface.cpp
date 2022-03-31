@@ -2,13 +2,19 @@
  
 // For compilers that support precompilation, includes "wx/wx.h".
 #include <wx/wxprec.h>
-#include "button.h"
 #include <iostream>
 #include <string>
+#include "client.h"
+#include "client.cpp"
+#include <sstream>
+
+
 #ifndef WX_PRECOMP
     #include <wx/wx.h>
 #endif
  
+using namespace std;
+
 class MyApp : public wxApp
 {
 public:
@@ -18,15 +24,30 @@ public:
 class MyFrame : public wxFrame
 {
 public:
+    
+    Client client =  Client();
+
+    // int id;
     MyFrame(int i , int j);
  
 private:
+    
     void OnClick(wxCommandEvent& event);
     void OnHello(wxCommandEvent& event);
     void OnExit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
 };
- 
+
+// class MyFrameInit : public wxFrame
+// {
+// public:
+    // MyFrameInit();
+// private:
+    // void OnEntry(wxCommandEvent& event);
+    // void OnHello(wxCommandEvent& event);
+    // void OnExit(wxCommandEvent& event);
+    // void OnAbout(wxCommandEvent& event);
+// };
 // enum
 // {
     // ID_Hello = 1
@@ -36,12 +57,21 @@ wxIMPLEMENT_APP(MyApp);
  
 bool MyApp::OnInit()
 {
-    MyFrame *frame = new MyFrame(8,8);
+    // MyFrameInit *frame_init = new MyFrameInit();
+    // frame_init->Show(true);
+    MyFrame *frame = new MyFrame(8,8); // estos parametros los debe enviar servidor
     frame->Show(true);
     return true;
 }
  
-MyFrame::MyFrame(int i, int j ): wxFrame(NULL, wxID_ANY, "Memory Game",wxDefaultPosition, wxSize(1500, 900))
+
+
+// MyFrameInit::MyFrameInit():wxFrame(NULL, wxID_ANY, "Memory Game Entry",wxDefaultPosition, wxSize(800, 600))
+// {
+// 
+// }
+
+MyFrame::MyFrame(int i, int j ): wxFrame(NULL, wxID_ANY, "Memory Game",wxDefaultPosition, wxSize(800, 600))
 {
     int x = 5;
     int y = 5;
@@ -73,24 +103,23 @@ void MyFrame::OnExit(wxCommandEvent& event)
 {
     Close(true);
 }
- 
-void MyFrame::OnAbout(wxCommandEvent& event)
-{
-    wxMessageBox("This is a wxWidgets Hello World example",
-                 "About Hello World", wxOK | wxICON_INFORMATION);
-}
- 
-void MyFrame::OnHello(wxCommandEvent& event)
-{
-    wxLogMessage("Hello world from wxWidgets!");
-}
 
 void MyFrame::OnClick(wxCommandEvent& event)
 {
     int id = event.GetId();
-    wxLogMessage("hello");
-    std::cout<<"es id "<< id<<std::endl;
-    std::cout<<event.GetId()<<std::endl;;
-    
+    char number_array[1024];
+    //conversion to char array
+    //"%d" format specifier is used for integers
+    sprintf(number_array, "%d", id);
+    // stringstream temp_str;
+    // temp_str<<id; //passing number to the stream
+    // char  *number_array = temp_str.str().c_str();//converting to char array
+    wxLogMessage("Hello");
+    std::cout<<number_array<<std::endl;
+    std::cout<<"es id "<<id<<std::endl;
+    // char *buffer_transmiter = new char[1024];
+    // buffer_transmiter = (char*) this->id;
+    client.conexion(number_array);
+
 }
 

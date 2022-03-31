@@ -12,7 +12,8 @@
 #include <arpa/inet.h>
 #include <string>
 #define PORT 8080
-#define server_ip "192.168.100.134"
+#define server_ip "192.168.0.13"
+#include "game.h"
 
 
 class Server{
@@ -24,11 +25,12 @@ class Server{
     int opt;
     int server_len;
     char buffer_reciever[1024];
+    Game game;
 
 
     public:
     Server();
-    void handeling_message(char message[1024]);
+    char* handeling_message(char message[1024]);
 
 };
 #endif
