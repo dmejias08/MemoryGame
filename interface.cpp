@@ -108,7 +108,7 @@ void MyFrame::OnClick(wxCommandEvent& event)
     // char  *number_array = temp_str.str().c_str();//converting to char array
     // wxLogMessage("Hello");
     // std::cout<<number_array<<std::endl;
-    std::cout<<"es id "<<id<<std::endl;
+    std::cout<<"es id de boton "<<id<<std::endl;
     // char *buffer_transmiter = new char[1024];
     // buffer_transmiter = (char*) this->id;
     client.conexion(request);

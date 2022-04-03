@@ -44,11 +44,11 @@ void Client::conexion(struct info_pack position_btn){
     }else{
         response = ((struct info_pack*)&buffer_reciever)->id;
         if(response == 0){
-            std::cout<<"Cliente: falta presionar una carta "<<response<<std::endl;
+            std::cout<<"Cliente: falta presionar una carta "<<std::endl;
         }else if(response == 1){
-            std::cout<<"Cliente: son iguales "<<response<<std::endl;
+            std::cout<<"Cliente: son iguales "<<std::endl;
         }else{
-            std::cout<<"Cliente: No son iguales "<<response<<std::endl;
+            std::cout<<"Cliente: No son iguales "<<std::endl;
 
         }
     }
