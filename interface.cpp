@@ -108,19 +108,24 @@ void MyFrame::OnClick(wxCommandEvent& event)
     int id = event.GetId();
     request.id = id;
     request.type_message = 0;
-    // char number_array[1024];
-    //conversion to char array
-    //"%d" format specifier is used for integers
-    // sprintf(number_array, "%d", id);
-    // stringstream temp_str;
-    // temp_str<<id; //passing number to the stream
-    // char  *number_array = temp_str.str().c_str();//converting to char array
-    // wxLogMessage("Hello");
-    // std::cout<<number_array<<std::endl;
+    request.card_type = 0;
     std::cout<<"es id de boton "<<id<<std::endl;
-    // char *buffer_transmiter = new char[1024];
-    // buffer_transmiter = (char*) this->id;
     client.conexion(request);
+    int cardtype = this->client.card_type;
+    switch (cardtype)
+    {
+    case 1:
+        wxMessageBox("Dog");
+        break;
+    case 2:
+        wxMessageBox("Cat");
+        break;
+    case 3:
+        wxMessageBox("Cow");
+        break;
+    default:
+        wxMessageBox("NONE");   
 
+}
 }
 

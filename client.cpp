@@ -43,6 +43,7 @@ void Client::conexion(struct info_pack position_btn){
         std::cout<<"Empty message"<<std::endl;
     }else{
         response = ((struct info_pack*)&buffer_reciever)->id;
+        this->card_type = ((struct info_pack*)&buffer_reciever)->card_type;
         if(response == 0){
             std::cout<<"Cliente: falta presionar una carta "<<std::endl;
         }else if(response == 1){

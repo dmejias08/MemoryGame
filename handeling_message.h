@@ -8,15 +8,17 @@ class Handeling_message{
 
     private:
     struct info_pack message;
+
     
 
     public:
     Memory_managment *memory = new Memory_managment();
     int id_card1=0;
     int id_card2=0;
+    int card_type1, card_type2;
     Handeling_message();
     struct info_pack* manage_message(struct info_pack *message);
-    int check_equals(int id1, int id2);
+    int check_equals(int id1, Card card2);
 
 
 };
