@@ -3,6 +3,6 @@
 
 int main(){
     Client client = Client();
-    client.conexion("10");
+    // client.conexion();
     
 }

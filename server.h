@@ -12,9 +12,9 @@
 #include <arpa/inet.h>
 #include <string>
 #define PORT 8080
-#define server_ip "192.168.0.13"
-#include "game.h"
-
+#define server_ip "192.168.0.40"
+#include "handeling_message.h"
+#include "handeling_message.cpp"
 
 class Server{
     private: 
@@ -24,13 +24,15 @@ class Server{
     unsigned int client_len;
     int opt;
     int server_len;
-    char buffer_reciever[1024];
-    Game game;
-
+    struct info_pack buffer_reciever;
+    struct info_pack buffer_transmiter;
+    // char buffer_reciever[1024];
+    // Game game;
+    Handeling_message manager;
 
     public:
     Server();
-    char* handeling_message(char message[1024]);
+    // char* handeling_message(char message[1024]);
 
 };
 #endif

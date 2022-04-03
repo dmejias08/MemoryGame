@@ -26,8 +26,6 @@ class MyFrame : public wxFrame
 public:
     
     Client client =  Client();
-
-    // int id;
     MyFrame(int i , int j);
  
 private:
@@ -86,15 +84,6 @@ MyFrame::MyFrame(int i, int j ): wxFrame(NULL, wxID_ANY, "Memory Game",wxDefault
             Connect(m*10 +n, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MyFrame::OnClick));
         }
     }
-    // wxButton *button1 = new wxButton(this, 10, wxT("Quit"), wxPoint(100, 5));
-    // wxButton *button2 = new wxButton(this, 11, wxT("Quit"), wxPoint(5, 5));
-    // Button *btn = new Button(this, 1,1,5,5)1
-    // wxButton *button = btn->button;
-    // Connect(10, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MyFrame::OnClick));
-
-    // button1->SetFocus();
-    // button2->SetFocus();
-    // button->SetFocus();
     Centre();
     Bind(wxEVT_MENU, &MyFrame::OnExit, this, wxID_EXIT);
 }
@@ -106,20 +95,23 @@ void MyFrame::OnExit(wxCommandEvent& event)
 
 void MyFrame::OnClick(wxCommandEvent& event)
 {
+    struct info_pack request;
     int id = event.GetId();
-    char number_array[1024];
+    request.id = id;
+    request.type_message = 0;
+    // char number_array[1024];
     //conversion to char array
     //"%d" format specifier is used for integers
-    sprintf(number_array, "%d", id);
+    // sprintf(number_array, "%d", id);
     // stringstream temp_str;
     // temp_str<<id; //passing number to the stream
     // char  *number_array = temp_str.str().c_str();//converting to char array
-    wxLogMessage("Hello");
-    std::cout<<number_array<<std::endl;
+    // wxLogMessage("Hello");
+    // std::cout<<number_array<<std::endl;
     std::cout<<"es id "<<id<<std::endl;
     // char *buffer_transmiter = new char[1024];
     // buffer_transmiter = (char*) this->id;
-    client.conexion(number_array);
+    client.conexion(request);
 
 }
 

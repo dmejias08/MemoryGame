@@ -24,6 +24,7 @@ class Memory_managment{
     
 
     public:
+    Memory_managment();
     Card get_card(int i, int j);
     Card replace(int i, int j);
     void generate_vector();

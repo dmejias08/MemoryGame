@@ -17,6 +17,11 @@ struct simple_card
     int i, j, type, status;
 };
 
+Memory_managment::Memory_managment(){
+    create_file();
+    generate_vector();
+}
+
 
 Card Memory_managment::get_card_from_file(int i, int j){
     // cout<<"estoy en get card"<<endl;
