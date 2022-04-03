@@ -28,7 +28,7 @@ Card Memory_managment::get_card_from_file(int i, int j){
     file.open("binary.txt", ios::in | ios::out | ios::binary);
         // if(file.is_open()){
             // cout<<"Estoy en file"<<endl;
-            file.seekg((i-1)*(4)*sizeof(simple_card)+(j-1)*sizeof(simple_card), ios::beg);
+            file.seekg((i-1)*(5)*sizeof(simple_card)+(j-1)*sizeof(simple_card), ios::beg);
             char *buffer = (char*) malloc(sizeof(simple_card));
             file.read(buffer, sizeof(simple_card));
             simple_card* card = (simple_card*) buffer;
@@ -55,7 +55,7 @@ void Memory_managment::set_card_to_file(int i, int j, int type, int status){
     file.open("binary.txt", ios::in | ios::out | ios::binary);
     //if(file.is_open()){
         // cout<<"EStoy en setCard"<<endl;
-        file.seekg(((i-1)*(4)*sizeof(simple_card)+(j-1)*sizeof(simple_card)),ios::beg);
+        file.seekg(((i-1)*(5)*sizeof(simple_card)+(j-1)*sizeof(simple_card)),ios::beg);
         file.write((char*)&card, sizeof(simple_card));
         file.close();
         

@@ -57,7 +57,7 @@ bool MyApp::OnInit()
 {
     // MyFrameInit *frame_init = new MyFrameInit();
     // frame_init->Show(true);
-    MyFrame *frame = new MyFrame(8,8); // estos parametros los debe enviar servidor
+    MyFrame *frame = new MyFrame(6,5); // estos parametros los debe enviar servidor
     frame->Show(true);
     return true;
 }
