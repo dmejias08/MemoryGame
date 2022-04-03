@@ -8,9 +8,10 @@ class Handeling_message{
 
     private:
     struct info_pack message;
-    Memory_managment memory = Memory_managment();
+    
 
     public:
+    Memory_managment *memory = new Memory_managment();
     int id_card1=0;
     int id_card2=0;
     Handeling_message();

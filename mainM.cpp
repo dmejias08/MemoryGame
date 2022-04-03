@@ -2,6 +2,8 @@
 #include "memory_managment.cpp"
 
 int main(){
+
+    //Archivo de pruebas
     Memory_managment *memory = new Memory_managment();
     // memory->set_card_to_file(1,1,1,0);
     // memory->set_card_to_file(1,2,2,0);
@@ -29,5 +31,6 @@ int main(){
     cout<<"****************************************"<<endl;
     memory->get_card(7,4);
     cout<<"****************************************"<<endl;
+    memory->print_file();
     delete memory;
 } 

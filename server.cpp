@@ -40,63 +40,42 @@ Server::Server(){
     //on the queue
     while (true)
     {
-        new_socket = accept(server, (struct sockaddr *)&client_address, &client_len);
-        if(new_socket <0)                   
-        {
-            std::cout<<"\n Error to accept client \n"<<std::endl;
-        }else{
-            std::cout<<"\n CLient accepted \n"<<std::endl;
-        }
-    
-
-        while (true)
-        {
-            int len_request = read(new_socket, (char*)&buffer_reciever, sizeof(buffer_reciever));
-            if(len_request==-1){
-                std::cout<<"Could not read message"<<std::endl;
-            }else if (len_request==0){//did not send 
-                std::cout<<"Socket closed"<<std::endl;
-                close(new_socket);
-                break;
+        if(this->flag == 0){
+            new_socket = accept(server, (struct sockaddr *)&client_address, &client_len);
+            if(new_socket <0)                   
+            {
+                std::cout<<"\n Error to accept client \n"<<std::endl;
             }else{
-                // manager.manage_message((struct info_pack *)&buffer_reciever);
-                // write(new_socket,buffer_trasmiter,strlen(buffer_trasmiter));
-                // std::cout<<"SERVER"<<buffer_reciever<<std::endl;
-                // handeling_message(buffer_reciever);
-                // buffer_trasmiter = handeling_message(buffer_reciever);
-                write(new_socket,manager.manage_message((struct info_pack *)&buffer_reciever),sizeof(buffer_transmiter));
-                // buffer_trasmiter =funtion that retruns a message from handeling message 
+                std::cout<<"\n CLient accepted \n"<<std::endl;
             }
+            while (true)
+            {
+                int len_request = read(new_socket, (char*)&buffer_reciever, sizeof(buffer_reciever));
+                if(len_request==-1){
+                    std::cout<<"Could not read message"<<std::endl;
+                }else if (len_request==0){//did not send 
+                    std::cout<<"Socket closed"<<std::endl;
+                    close(new_socket);
+                    break;
+                }else if(((struct info_pack *)&buffer_reciever)->type_message == -1){
+                    delete this->manager.memory;
+                    close(new_socket);
+                    this->flag = 1;
+                    break;
+                }else{
+                    // manager.manage_message((struct info_pack *)&buffer_reciever);
+                    // write(new_socket,buffer_trasmiter,strlen(buffer_trasmiter));
+                    // std::cout<<"SERVER"<<buffer_reciever<<std::endl;
+                    // handeling_message(buffer_reciever);
+                    // buffer_trasmiter = handeling_message(buffer_reciever);
+                    write(new_socket,manager.manage_message((struct info_pack *)&buffer_reciever),sizeof(buffer_transmiter));
+                    // buffer_trasmiter =funtion that retruns a message from handeling message 
+                }
+            }
+        }else {
+            std::cout<<"Close server";
+            close(server);
+            break;
         }
-    }
+    }close(server);
 }
-// char* Server::handeling_message(char message[1024]){
-//     std::cout<<"Mensaje: "<<message<<" en handeling message"<<std::endl;
-//     int pos1;
-//     int pos2;
-//     //position arrives 
-//     int *i;
-//     sscanf(message, "%d", i);
-//     std::cout<<"estoy en sever pos es "<<i<<std::endl;
-    
-//     if(pos1 == 0){
-//         pos1 = i;
-//     }else if(pos2 == 0){
-//         pos2 = i;
-//         std::cout<<"pos "<<pos1<<"pos 2"<<pos2<<std::endl;
-//     }else{
-//         std::cout<<"Estoy en handeling message else"<<std::endl;
-//         // char *response = new char[1024];
-//         // response =(char*)this->game.check_equals(pos1,pos2); ;
-//         // return response;
-//     }
-
-    
-
-   
-   
-   
-    
-
-// this method is going to read the message and redirect it to the method it needs to go
-

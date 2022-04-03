@@ -33,6 +33,7 @@ class Memory_managment{
     void set_card_to_file(int i, int j, int type, int status);
     void print_vector();
     void shuffle();
+    void print_file();
 
 };
 

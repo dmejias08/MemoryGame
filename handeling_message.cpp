@@ -32,8 +32,8 @@ int Handeling_message::check_equals(int id1, int id2){
     int i2 = id2/10;
     int j2 = id2%10;
 
-    Card card1 = this->memory.get_card(i1,j1);
-    Card card2 = this->memory.get_card(i2,j2);
+    Card card1 = this->memory->get_card(i1,j1);
+    Card card2 = this->memory->get_card(i2,j2);
 
     std::cout<<"La carta1 es ";
     card1.print();

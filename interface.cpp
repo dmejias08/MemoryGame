@@ -7,6 +7,7 @@
 #include "client.h"
 #include "client.cpp"
 #include <sstream>
+#include "handeling_message.h"
 
 
 #ifndef WX_PRECOMP
@@ -85,11 +86,19 @@ MyFrame::MyFrame(int i, int j ): wxFrame(NULL, wxID_ANY, "Memory Game",wxDefault
         }
     }
     Centre();
-    Bind(wxEVT_MENU, &MyFrame::OnExit, this, wxID_EXIT);
+    wxButton *btn_exit =new wxButton(this,100, wxT("EXIT"), wxPoint(600,500));
+    btn_exit->SetFocus();
+    Connect(100, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MyFrame::OnExit));
+    // Bind(wxEVT_MENU, &MyFrame::OnExit, this, wxID_EXIT);
 }
  
 void MyFrame::OnExit(wxCommandEvent& event)
 {
+    std::cout<<"estoy en onExit"<<std::endl;
+    struct info_pack request;
+    request.id = 0;
+    request.type_message = -1;
+    client.conexion(request);
     Close(true);
 }
 

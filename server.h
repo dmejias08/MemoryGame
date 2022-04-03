@@ -19,6 +19,7 @@
 class Server{
     private: 
     int server, new_socket;
+    int flag = 0;
     char value_read;
     struct sockaddr_in server_address, client_address;
     unsigned int client_len;
@@ -29,6 +30,7 @@ class Server{
     // char buffer_reciever[1024];
     // Game game;
     Handeling_message manager;
+    
 
     public:
     Server();
