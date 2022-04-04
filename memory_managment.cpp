@@ -19,7 +19,7 @@ struct simple_card
 
 Memory_managment::Memory_managment(){
     create_file();
-    generate_vector();
+    generate_vector(10);
 }
 
 
@@ -64,8 +64,8 @@ void Memory_managment::set_card_to_file(int i, int j, int type, int status){
 }
 Card Memory_managment::get_card(int i, int j){
     int flag = 1;
-
-    for(int n = 0; n<10; n++){
+    int limit = this->size_vector;
+    for(int n = 0; n< limit; n++){
         if (this->vector_card[n].i == i && this->vector_card[n].j == j){
             cout<<"Found object in vector: ";
             this->vector_card[n].print();
@@ -85,7 +85,7 @@ Card Memory_managment::get_card(int i, int j){
 }
 
 Card Memory_managment::replace(int i, int j){
-    int n = rand()%10;
+    int n = rand()%this->size_vector;
     cout<<"Delete position "<<n<<endl;
     cout<<"object deleted ";
     this->vector_card[n].print();
@@ -100,26 +100,28 @@ Card Memory_managment::replace(int i, int j){
     Card card = get_card_from_file(i,j);
     this->vector_card.push_back(card);
     cout<<"New object is: "<<endl;
-    this->vector_card[9].print();
+    card.print();
     cout<<"New vector is: "<<endl;
     this->print_vector();
     return card;
 
 }
-void Memory_managment::generate_vector(){
+void Memory_managment::generate_vector(int size){
+    this->size_vector = size;
     for(int i = 1 ; i <= 2; i++){
-        for(int j = 1; j<=5; j++){
+        for(int j = 1; j<=size/2; j++){
             this->vector_card.push_back(get_card_from_file(i,j));
         }
     }
 }
 void Memory_managment::print_vector(){
-    for(int n = 0; n < 10; n++){
+    int limit = this->size_vector;
+    for(int n = 0; n < limit ; n++){
         this->vector_card[n].print();
     }
 }
 void Memory_managment::create_file(){
-    int n = 1;
+    int n = 1;  
     for (int i = 1; i <= 6; i++){
         for (int j = 1; j<=5; j++){
             if (n > 3){
@@ -139,4 +141,31 @@ void Memory_managment::print_file(){
             get_card_from_file(i,j).print();
         }
     }
+}
+
+void Memory_managment::delete_cards(Card card1, Card card2){
+    int limit = this->size_vector;
+        for(int n = 0; n< limit; n++){
+            if (this->vector_card[n].i == card1.i && this->vector_card[n].j == card1.j){
+                int old_i = this->vector_card[n].i;
+                int old_j = this->vector_card[n].j;
+                int old_type = this->vector_card[n].type;
+                int old_status = 1;
+                set_card_to_file(old_i, old_j, old_type, old_status);
+                cout<<"Delete card: ";
+                this->vector_card[n].print();
+                this->vector_card.erase(this->vector_card.begin()+n);
+            }else if(this->vector_card[n].i == card2.i && this->vector_card[n].j == card2.j){
+                int old_i2 = this->vector_card[n].i;
+                int old_j2 = this->vector_card[n].j;
+                int old_type2 = this->vector_card[n].type;
+                int old_status2 = 1;
+                set_card_to_file(old_i2, old_j2, old_type2, old_status2);
+                cout<<"Delete card: ";
+                this->vector_card[n].print();
+                this->vector_card.erase(this->vector_card.begin()+n);
+            }
+        }
+    this->size_vector = this->size_vector-2;
+    print_vector();
 }

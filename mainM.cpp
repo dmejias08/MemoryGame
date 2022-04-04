@@ -1,5 +1,7 @@
 #include "memory_managment.h"
 #include "memory_managment.cpp"
+// #include "card.h"
+// #include "card.cpp"
 
 int main(){
 
@@ -18,19 +20,27 @@ int main(){
     // memory->get_card_from_file(1,1);
     // memory->get_card_from_file(1,2);
     // memory->get_card_from_file(1,3);
-
+    cout<<"******************Create file***************"<<endl;
     memory->create_file();
-    memory->generate_vector();
+    cout<<"***********************VECTOR**************"<<endl;
+    memory->generate_vector(10);
+    cout<<"************************PRINT************"<<endl;
     memory->print_vector();
-
     cout<<"****************************************"<<endl;
     memory->get_card_from_file(1,4);
     memory->get_card_from_file(2,3);
     cout<<"****************************************"<<endl;
     memory->get_card(2,3);
     cout<<"****************************************"<<endl;
-    memory->get_card(7,4);
+    memory->get_card(6,4);
     cout<<"****************************************"<<endl;
     memory->print_file();
+    cout<<"****************************************"<<endl;
+    memory->delete_cards(memory->get_card(2,3),memory->get_card(6,4));
+    cout<<"****************************************"<<endl;
+    memory->print_file();
+    cout<<"****************************************"<<endl;
+    memory->print_vector();
+
     delete memory;
 } 

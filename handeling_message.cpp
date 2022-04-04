@@ -50,10 +50,9 @@ int Handeling_message::check_equals(int id1, Card card2){
     card2.print();
 
     if(card1.type == card2.type){
-        card1.status = 1;
-        card2.status = 1;
+        this->memory->delete_cards(card1, card2);
         std::cout<<"nuevo vector"<<std::endl;
-        this->memory->print_vector()
+        this->memory->print_vector();
         return 1;
     }
     return 2;
