@@ -11,17 +11,12 @@
         int cont4 = 0;
         int cont5 = 0;
     	int random; 
-    	for (int i = 0; i < 30; i++) 
+    	for (int i = 0; i < 5; i++) 
     	{ 
-            if(cont1 <= 3){
-                //
-                cont1 +=1;
-            }else if()
-    		random = rand()%5+1; 
+    		random = rand()%2; 
 
     		cout << random << " "; 
     	} 
-    	cout << endl; 
     } 
     // int n = rand()%10;
     // if (n > 5){

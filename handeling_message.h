@@ -8,6 +8,7 @@ class Handeling_message{
 
     private:
     struct info_pack message;
+    int flag_card1, flag_card2;
 
     
 

@@ -1,6 +1,9 @@
-make:
+game:
 	g++ interface.cpp `wx-config --cxxflags --libs std` -o program
-
-run:
 	./program
+
+:
+	g++ mainS.cpp -o server
+	./server
+	
 

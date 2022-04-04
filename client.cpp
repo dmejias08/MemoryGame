@@ -48,7 +48,7 @@ void Client::conexion(struct info_pack position_btn){
             std::cout<<"Cliente: falta presionar una carta "<<std::endl;
         }else if(this->response== 1){
             std::cout<<"Cliente: son iguales "<<std::endl;
-        }else{
+        }else {
             std::cout<<"Cliente: No son iguales "<<std::endl;
 
         }

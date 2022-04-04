@@ -25,6 +25,7 @@ class Memory_managment{
     
 
     public:
+    int flag; //si es cero entonces está en vector
     Memory_managment();
     Card get_card(int i, int j);
     Card replace(int i, int j);

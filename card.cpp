@@ -23,6 +23,12 @@ void Card::get_image(int type){
     case 3:
         this->img = "vaca.png";
         break;
+    case 4:
+        this->img = "cerdo.png";
+        break;
+    case 5:
+        this->img = "gallina.png";
+        break;
     default:
         cout<<"Cannot find image"<<endl;
         break;

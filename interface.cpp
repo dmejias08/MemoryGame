@@ -34,7 +34,7 @@ public:
 private:
     const char* manage_response(int response);
     void image_manager(int id,const char* card, int response);
-    void resetImage(int id);
+    void resetImage(int id, int responsess);
     void showImage(int id, const char* card);
     void OnClick(wxCommandEvent& event);
     void OnHello(wxCommandEvent& event);
@@ -111,13 +111,11 @@ void MyFrame::image_manager(int id, const char* card, int response){
         showImage(id, card);
         this->old_id = id;
         this->clicks = 2;
-    }else if(this->clicks ==2){
+    }else{
         showImage(id, card);
         wxMessageBox(manage_response(response));
-        if(response!= 1){
-        resetImage(id);
-        resetImage(this->old_id);
-        }
+        resetImage(id, response);
+        resetImage(this->old_id, response);
         this->clicks = 1;
     }
 }
@@ -128,10 +126,15 @@ void MyFrame::showImage(int id, const char* card){
         }
     }
 }
-void MyFrame::resetImage(int id){
+void MyFrame::resetImage(int id, int response){
     for(int i=0; i<30; i++){
         if(this->vector_buttons[i]->GetId()==id){
-            this->vector_buttons[i]->SetBitmapLabel(wxBitmap("card.png", wxBITMAP_TYPE_PNG));
+            if(response == 1){
+                this->vector_buttons[i]->Enable(false);
+                this->vector_buttons[i]->SetBitmapLabel(wxBitmap("Check.png", wxBITMAP_TYPE_PNG));
+            }else{
+                this->vector_buttons[i]->SetBitmapLabel(wxBitmap("card.png", wxBITMAP_TYPE_PNG));
+            }
         }
     }
 }
@@ -174,6 +177,14 @@ void MyFrame::OnClick(wxCommandEvent& event)
         break;
     case 3://cow
         card = "Cow.png";
+        image_manager(id, card, response );
+        break;
+    case 4:
+        card = "Pig.png";
+        image_manager(id, card, response );
+        break;
+    case 5:
+        card = "Hen.png";
         image_manager(id, card, response );
         break;
     default:

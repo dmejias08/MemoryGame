@@ -12,18 +12,20 @@ struct info_pack* Handeling_message::manage_message(struct info_pack *message){
             int i1 = id_card1/10;
             int j1 = id_card1%10;
             Card card1 = this->memory->get_card(i1,j1);
-            std::cout<<"el id1 del boton es: "<<this->id_card1<<std::endl;
+            this->flag_card1 = this->memory->flag;
+            // std::cout<<"el id1 del boton es: "<<this->id_card1<<std::endl;
             message->id = 0; //need to click one more card
             message->card_type = card1.type;
             return message;
         }else{
-            std::cout<<"El segundo id "<<message->id<<std::endl;
+            // std::cout<<"El segundo id "<<message->id<<std::endl;
             this->id_card2 = message->id;
-            std::cout<<"el id1 del boton es: "<<this->id_card1<<std::endl;
-            std::cout<<"el id2 del boton es: "<<this->id_card2<<std::endl;
+            // std::cout<<"el id1 del boton es: "<<this->id_card1<<std::endl;
+            // std::cout<<"el id2 del boton es: "<<this->id_card2<<std::endl;
             int i2 = id_card2/10;
             int j2 = id_card2%10;
             Card card2 = this->memory->get_card(i2,j2);
+            this->flag_card2 = this->memory->flag;
             int result = check_equals(this->id_card1, card2);
             message->id = result;
             message->card_type = card2.type;
@@ -50,8 +52,14 @@ int Handeling_message::check_equals(int id1, Card card2){
     card2.print();
 
     if(card1.type == card2.type){
-        this->memory->delete_cards(card1, card2);
-        std::cout<<"nuevo vector"<<std::endl;
+        if(this->flag_card1 == 0 && this->flag_card2 ==0){
+            this->memory->delete_cards(card1, card2);
+            std::cout<<"nuevo vector"<<std::endl;
+            this->memory->print_vector();
+        }
+        card1.status = 1;
+        card2.status = 1;
+        std::cout<<"El nuevo vector"<<std::endl;
         this->memory->print_vector();
         return 1;
     }
