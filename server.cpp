@@ -73,9 +73,9 @@ Server::Server(){
                 }
             }
         }else {
-            std::cout<<"Close server";
+            std::cout<<"Close server"<<std::endl;
             close(server);
             break;
         }
-    }close(server);
+    }
 }

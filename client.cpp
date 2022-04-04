@@ -42,11 +42,11 @@ void Client::conexion(struct info_pack position_btn){
     }else if (len_response==0){//did not send 
         std::cout<<"Empty message"<<std::endl;
     }else{
-        response = ((struct info_pack*)&buffer_reciever)->id;
+        this->response = ((struct info_pack*)&buffer_reciever)->id;
         this->card_type = ((struct info_pack*)&buffer_reciever)->card_type;
-        if(response == 0){
+        if(this->response == 0){
             std::cout<<"Cliente: falta presionar una carta "<<std::endl;
-        }else if(response == 1){
+        }else if(this->response== 1){
             std::cout<<"Cliente: son iguales "<<std::endl;
         }else{
             std::cout<<"Cliente: No son iguales "<<std::endl;

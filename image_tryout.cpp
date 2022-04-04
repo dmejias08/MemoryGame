@@ -9,6 +9,7 @@
 #include <sstream>
 #include "handeling_message.h"
 #include <unistd.h>
+#include <vector>
 
 #ifndef WX_PRECOMP
     #include <wx/wx.h>
@@ -27,14 +28,16 @@ class MyFrame : public wxFrame
 public:
     wxBitmapButton *btn1;
     wxBitmapButton *btn2;
-    int id_btn, i_btn, j_btn;
+    std::vector<wxBitmapButton*> vector_buttons;
+    int old_id;
     int clicks=1;
     Client client =  Client();
     MyFrame(int i , int j);
  
 private:
     
-    void showImage(wxBitmapButton *btn);
+    void resetImage(int id);
+    void showImage(int id);
     void OnClick(wxCommandEvent& event);
     void OnHello(wxCommandEvent& event);
     void OnExit(wxCommandEvent& event);
@@ -82,24 +85,34 @@ MyFrame::MyFrame(int i, int j ): wxFrame(NULL, wxID_ANY, "Memory Game",wxDefault
     this->btn1 =new wxBitmapButton(this, 1,wxBitmap("card.png", wxBITMAP_TYPE_PNG), wxPoint(5,100 ), wxSize(200,200));
     btn1->SetFocus();
     Connect(1, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MyFrame::OnClick));
+    this->vector_buttons.push_back(btn1);
     // image1 = new wxStaticBitmap( this, 1, wxBitmap("card.png", wxBITMAP_TYPE_PNG), wxPoint(5,100 ), wxSize(200, 200));
     
     this->btn2 =new wxBitmapButton(this, 2 , wxBitmap("card.png", wxBITMAP_TYPE_PNG), wxPoint(5,400 ), wxSize(200,200));
     btn2->SetFocus();
     Connect(2, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MyFrame::OnClick));
+    this->vector_buttons.push_back(btn2);
     // image2 = new wxStaticBitmap( this, 2, wxBitmap("card.png", wxBITMAP_TYPE_PNG), wxPoint(5,400 ),wxSize(200, 200));
 }
  
-// void MyFrame::showImage(wxBitmapButton *btn){
-//     if(this->clicks == 1){
-//         btn->SetBitmapLabel(wxBitmap("dog.png", wxBITMAP_TYPE_PNG));
-//     }else if(this->clicks==2){
-//         btn->SetBitmapLabel(wxBitmap("dog.png", wxBITMAP_TYPE_PNG));
-//         sleep(10);
-//         btn->SetBitmapLabel(wxBitmap("card.png", wxBITMAP_TYPE_PNG));
-//         this->btn_old->SetBitmapLabel(wxBitmap("card.png", wxBITMAP_TYPE_PNG));
-//     }
-// }
+void MyFrame::showImage(int id){
+    std::cout<<"estoy en show image"<<std::endl;
+    for(int i=0; i<2; i++){
+        if(this->vector_buttons[i]->GetId()==id){
+            std::cout<<"estoy dentro del if en show image"<<std::endl;
+            this->vector_buttons[i]->SetBitmapLabel(wxBitmap("dog.png", wxBITMAP_TYPE_PNG));
+        }
+    }
+}
+void MyFrame::resetImage(int id){
+    for(int i=0; i<2; i++){
+    std::cout<<"id de btn en vector "<<this->vector_buttons[i]->GetId()<<std::endl;
+        if(this->vector_buttons[i]->GetId()==id){
+            std::cout<<"estoy dentro del if en reset image"<<std::endl;
+            this->vector_buttons[i]->SetBitmapLabel(wxBitmap("card.png", wxBITMAP_TYPE_PNG));
+        }
+    }
+}
 void MyFrame::OnExit(wxCommandEvent& event)
 {
     std::cout<<"estoy en onExit"<<std::endl;
@@ -124,18 +137,21 @@ void MyFrame::OnClick(wxCommandEvent& event)
     client.conexion(request);
 
     if (this->clicks == 1){
-        this->btn1->SetBitmapLabel(wxBitmap("dog.png", wxBITMAP_TYPE_PNG));
+        showImage(id);
+        // this->btn1->SetBitmapLabel(wxBitmap("dog.png", wxBITMAP_TYPE_PNG));
+        this->old_id = id;
         this->clicks = 2;
         // showImage((wxBitmapButton*)&event);
     }else if(this->clicks ==2){
-        this->btn2->SetBitmapLabel(wxBitmap("dog.png", wxBITMAP_TYPE_PNG));
+        showImage(id);
+        // this->btn2->SetBitmapLabel(wxBitmap("dog.png", wxBITMAP_TYPE_PNG));
         wxMessageBox("Dog");
         // sleep(2);
-        this->btn1->SetBitmapLabel(wxBitmap("card.png", wxBITMAP_TYPE_PNG));
-        this->btn2->SetBitmapLabel(wxBitmap("card.png", wxBITMAP_TYPE_PNG));
+        resetImage(id);
+        resetImage(this->old_id);
+        // this->btn1->SetBitmapLabel(wxBitmap("card.png", wxBITMAP_TYPE_PNG));
+        // this->btn2->SetBitmapLabel(wxBitmap("card.png", wxBITMAP_TYPE_PNG));
         // showImage((wxBitmapButton*)&event);
         this->clicks = 1;
     }
-    
-
 }

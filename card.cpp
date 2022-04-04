@@ -29,5 +29,5 @@ void Card::get_image(int type){
     }
 }
 void Card::print(){
-    std::cout<<"Coordenadas"<<"("<<this->i<<","<<this->j<<")"<<this->type<<" "<<this->img<<" "<<this->status<<std::endl;
+    std::cout<<"Coordenadas"<<"("<<this->i<<","<<this->j<<")"<<" "<<this->img<<" El status: "<<this->status<<std::endl;
 }
