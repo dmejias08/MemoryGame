@@ -42,14 +42,13 @@ int Handeling_message::check_equals(int id1, Card card2){
     int j1 = id1%10;
     // int i2 = id2/10;
     // int j2 = id2%10;
-
-    Card card1 = this->memory->get_card(i1,j1);
     // Card card2 = this->memory->get_card(i2,j2);
-
+    Card card1 = this->memory->get_card(i1,j1);
     std::cout<<"La carta1 es ";
     card1.print();
     std::cout<<"La carta2 es ";
     card2.print();
+
 
     if(card1.type == card2.type){
             card1.status = 1;

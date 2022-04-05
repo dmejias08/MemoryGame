@@ -1,6 +1,5 @@
 #include "memory_managment.h"
 #include <string>
-#include "card.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -96,22 +95,32 @@ Card Memory_managment::replace(int i, int j){
 void Memory_managment::generate_vector(int size){
     srand(time(0));
     this->vector_card.clear();
+    this->vect_pos.clear();
     this->size_vector = size;
     // int int_vector = 6;
     int i;
     int j;
     int n =0;
     while(true){
-        if(n == size){
+
+        if(n >= size){
+            
+            cout<<"cerrando ciclos"<<endl;
             break;
         }else{
+
             i = rand()%6+1;
             j = rand()%5+1;
+            cout<<"Estoy en Else"<<endl;
+            // cout<<verify(i*10+j)<<endl;
             if (verify(i*10+j)){
                 cout<<"generate position: "<<"("<<i<<","<<j<<")"<<endl;
                 Card card_temp = get_card_from_file(i,j);
+                cout<<"Carta cargada con exito"<<endl;
                 if (card_temp.status != 1){
+                    cout<<"Meter carta en vector"<<endl;
                     this->vector_card.push_back(card_temp);
+                    cout<<"Estoy despues de pushback"<<endl;
                     n++;
                 }
             }
@@ -168,7 +177,7 @@ void Memory_managment::delete_cards(Card card){
                 set_card_to_file(old_i, old_j, old_type, old_status);
                 cout<<"Delete card: ";
                 this->vector_card[n].print();
-                this->vector_card.erase(this->vector_card.begin()+n);
+                // this->vector_card.erase(this->vector_card.begin()+n);
             }
         }
 }
