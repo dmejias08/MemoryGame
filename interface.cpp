@@ -42,6 +42,21 @@ private:
     void OnAbout(wxCommandEvent& event);
 };
 
+class MyFrameStart : public wxFrame
+{
+public:
+    // long param1;
+    // long param2;
+    wxTextCtrl *entry1;
+    wxTextCtrl *entry2;
+    Client client =  Client();
+    MyFrameStart();
+ 
+private:
+
+    void OnClick(wxCommandEvent& event);
+
+};
 // class MyFrameInit : public wxFrame
 // {
 // public:
@@ -63,8 +78,8 @@ bool MyApp::OnInit()
 {
     // MyFrameInit *frame_init = new MyFrameInit();
     // frame_init->Show(true);
-    MyFrame *frame = new MyFrame(6,5); // estos parametros los debe enviar servidor
-    frame->Show(true);
+    MyFrameStart *frameStart = new MyFrameStart(); // estos parametros los debe enviar servidor
+    frameStart->Show(true);
     return true;
 }
  
@@ -74,6 +89,24 @@ bool MyApp::OnInit()
 // {
 // 
 // }
+MyFrameStart::MyFrameStart(): wxFrame(NULL, wxID_ANY, "Memory Game Start",wxDefaultPosition, wxSize(1000, 800))
+{
+
+    this->entry1 = new wxTextCtrl(this, wxID_ANY, wxT(""),wxPoint(5,100));
+    this->entry2 = new wxTextCtrl(this, wxID_ANY, wxT(""), wxPoint(150,100));
+    wxButton *btn_start =new wxButton(this,100, wxT("START"), wxPoint(900,700));
+    btn_start->SetFocus();
+    Connect(100, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MyFrameStart::OnClick));
+}
+void MyFrameStart::OnClick(wxCommandEvent& event){
+    // wxString *jug1;
+    // wxString *jug2;
+    // jug1 = this->entry1->GetLineText(this->param1);
+    // jug2 = this->entry2->GetLineText(this->param2);
+    MyFrame *frame = new MyFrame(6,5); // estos parametros los debe enviar servidor
+    frame->Show(true);
+    this->Show(false);
+}
 
 MyFrame::MyFrame(int i, int j ): wxFrame(NULL, wxID_ANY, "Memory Game",wxDefaultPosition, wxSize(1000, 800))
 {

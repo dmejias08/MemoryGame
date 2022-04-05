@@ -19,7 +19,7 @@ struct simple_card
 Memory_managment::Memory_managment(){
     create_file();
     cout<<"file created"<<endl;
-    print_file();
+    // print_file();
     cout<<"vector"<<endl;
     generate_vector(10);
     print_vector();
@@ -102,25 +102,22 @@ void Memory_managment::generate_vector(int size){
     int j;
     int n =0;
     while(true){
-
         if(n >= size){
-            
-            cout<<"cerrando ciclos"<<endl;
+            // cout<<"cerrando ciclos"<<endl;
             break;
         }else{
-
             i = rand()%6+1;
             j = rand()%5+1;
-            cout<<"Estoy en Else"<<endl;
+            // cout<<"Estoy en Else"<<endl;
             // cout<<verify(i*10+j)<<endl;
             if (verify(i*10+j)){
-                cout<<"generate position: "<<"("<<i<<","<<j<<")"<<endl;
+                // cout<<"generate position: "<<"("<<i<<","<<j<<")"<<endl;
                 Card card_temp = get_card_from_file(i,j);
-                cout<<"Carta cargada con exito"<<endl;
+                // cout<<"Carta cargada con exito"<<endl;
                 if (card_temp.status != 1){
-                    cout<<"Meter carta en vector"<<endl;
+                    // cout<<"Meter carta en vector"<<endl;
                     this->vector_card.push_back(card_temp);
-                    cout<<"Estoy despues de pushback"<<endl;
+                    // cout<<"Estoy despues de pushback"<<endl;
                     n++;
                 }
             }
