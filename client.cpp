@@ -42,6 +42,8 @@ void Client::conexion(struct info_pack position_btn){
     }else if (len_response==0){//did not send 
         std::cout<<"Empty message"<<std::endl;
     }else{
+        this->points = ((struct info_pack*)&buffer_reciever)->points;
+        this->current_player = ((struct info_pack*)&buffer_reciever)->current_player;
         this->response = ((struct info_pack*)&buffer_reciever)->id;
         this->card_type = ((struct info_pack*)&buffer_reciever)->card_type;
         // this->img = ((struct info_pack*)&buffer_reciever)->img;                          

@@ -28,6 +28,9 @@ struct info_pack* Handeling_message::manage_message(struct info_pack *message){
             this->flag_card2 = this->memory->flag;
             int result = check_equals(this->id_card1, card2);
             message->id = result;
+            int points = assign_point(result);
+            message->points = points;
+            message->current_player = this->current_player;
             message->card_type = card2.type;
             this->id_card1 =0;
             this->id_card2 =0;
@@ -59,6 +62,28 @@ int Handeling_message::check_equals(int id1, Card card2){
             return 1;
     }
     return 2;
+}
+
+int Handeling_message::assign_points(int result){
+    if(this->current_player == 1){
+        if(result == 1){
+            this->ptos_jug1 += 10;
+
+        }else{
+            this->ptos_jug1 -= 2;
+            this->current_player = 2;
+        }
+        return this->ptos_jug1;
+    }else{
+        if(result == 1){
+            this->ptos_jug2 += 10;
+
+        }else{
+            this->ptos_jug2 -= 2;
+            this->current_player = 1;
+        }
+        return this->ptos_jug2; 
+    }
 }
 
 

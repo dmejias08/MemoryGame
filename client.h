@@ -18,6 +18,8 @@ struct info_pack
     int id;
     int type_message;
     int card_type;
+    int current_player;
+    int points;
 };
 
 
@@ -34,6 +36,8 @@ class Client{
     public:
     int response;
     int card_type;
+    int current_player;
+    int points;
     // char img; 
     struct info_pack request;
     Client();
