@@ -44,6 +44,7 @@ void Client::conexion(struct info_pack position_btn){
     }else{
         this->response = ((struct info_pack*)&buffer_reciever)->id;
         this->card_type = ((struct info_pack*)&buffer_reciever)->card_type;
+        // this->img = ((struct info_pack*)&buffer_reciever)->img;                          
         if(this->response == 0){
             std::cout<<"Cliente: falta presionar una carta "<<std::endl;
         }else if(this->response== 1){

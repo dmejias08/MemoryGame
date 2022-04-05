@@ -15,19 +15,19 @@ void Card::get_image(int type){
     switch (type)
     {
     case 1:
-        this->img = "perro.png";
+        this->img = "Dog.png";
         break;
     case 2:
-        this->img = "gato.png";
+        this->img = "Cat.png";
         break;
     case 3:
-        this->img = "vaca.png";
+        this->img = "Cow.png";
         break;
     case 4:
-        this->img = "cerdo.png";
+        this->img = "Pig.png";
         break;
     case 5:
-        this->img = "gallina.png";
+        this->img = "Hen.png";
         break;
     default:
         cout<<"Cannot find image"<<endl;

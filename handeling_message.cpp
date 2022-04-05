@@ -52,16 +52,12 @@ int Handeling_message::check_equals(int id1, Card card2){
     card2.print();
 
     if(card1.type == card2.type){
-        if(this->flag_card1 == 0 && this->flag_card2 ==0){
-            this->memory->delete_cards(card1, card2);
-            std::cout<<"nuevo vector"<<std::endl;
-            this->memory->print_vector();
-        }
-        card1.status = 1;
-        card2.status = 1;
-        std::cout<<"El nuevo vector"<<std::endl;
-        this->memory->print_vector();
-        return 1;
+            card1.status = 1;
+            card2.status = 1;
+            this->memory->delete_cards(card1);
+            this->memory->delete_cards(card2);
+            this->memory->shuffle();
+            return 1;
     }
     return 2;
 }

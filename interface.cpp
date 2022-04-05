@@ -106,7 +106,7 @@ const char*  MyFrame::manage_response(int response){
             return "Las cartas son diferentes";
         }
 }
-void MyFrame::image_manager(int id, const char* card, int response){
+void MyFrame::image_manager(int id,const char* card, int response){
     if (this->clicks == 1){
         showImage(id, card);
         this->old_id = id;
@@ -119,7 +119,7 @@ void MyFrame::image_manager(int id, const char* card, int response){
         this->clicks = 1;
     }
 }
-void MyFrame::showImage(int id, const char* card){
+void MyFrame::showImage(int id, const char*card){
     for(int i=0; i<30; i++){
         if(this->vector_buttons[i]->GetId()==id){
             this->vector_buttons[i]->SetBitmapLabel(wxBitmap(card, wxBITMAP_TYPE_PNG));
@@ -163,7 +163,7 @@ void MyFrame::OnClick(wxCommandEvent& event)
 
     int cardtype = this->client.card_type;
     int response = this->client.response;
-    const char* card;
+    const char*  card;
 
     switch (cardtype)
     {

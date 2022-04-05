@@ -22,6 +22,9 @@ class Memory_managment{
     private:
     std::vector<Card> vector_card;
     int size_vector;
+    int card_unused = 30;
+    vector<int> vect_pos;
+
     
 
     public:
@@ -36,7 +39,8 @@ class Memory_managment{
     void print_vector();
     void shuffle();
     void print_file();
-    void delete_cards(Card card1, Card card2);
+    void delete_cards(Card card1);
+    bool verify(int pos);
 
 };
 

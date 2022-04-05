@@ -34,6 +34,7 @@ class Client{
     public:
     int response;
     int card_type;
+    // char img; 
     struct info_pack request;
     Client();
     void conexion(struct info_pack position_btn);
