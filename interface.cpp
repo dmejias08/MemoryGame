@@ -28,7 +28,7 @@ public:
     wxStaticText *label_play2;
     wxStaticText *lb_play1_points;
     wxStaticText *lb_play2_points;
-    int current_player;
+    int current_player =1;;
     std::vector<wxBitmapButton*> vector_buttons;
     int old_id;
     int clicks=1;
@@ -237,10 +237,16 @@ void MyFrame::OnClick(wxCommandEvent& event)
     default:
         wxMessageBox("NONE");   
     }
-    if(this->client.points != 0 ){
-        updateLabel(this->client.player_points, this->client.points);
-        update_turn(this->current_player);
+    if(points != 0 ){
+    update_turn(this->current_player);
+    updateLabel(this->client.player_points, this->client.points);
     }
+    update_turn(this->current_player);
+
+
+    }
+
     
-}
+    
+
 

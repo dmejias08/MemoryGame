@@ -2,9 +2,6 @@
 #include "server.h"
 #include "game.h"
 Server::Server(){
-    // char *buffer_trasmiter= new char[1024];
-    // buffer_trasmiter = "Hola Dario, soy server";
-    
     server= socket(AF_INET, SOCK_STREAM, 0);
     if(server < 0){
         std::cout<<"\n Error initializing server \n"<<std::endl;
@@ -53,6 +50,7 @@ Server::Server(){
                 int len_request = read(new_socket, (char*)&buffer_reciever, sizeof(buffer_reciever));
                 if(len_request==-1){
                     std::cout<<"Could not read message"<<std::endl;
+                    break;
                 }else if (len_request==0){//did not send 
                     std::cout<<"Socket closed"<<std::endl;
                     close(new_socket);
@@ -63,13 +61,7 @@ Server::Server(){
                     this->flag = 1;
                     break;
                 }else{
-                    // manager.manage_message((struct info_pack *)&buffer_reciever);
-                    // write(new_socket,buffer_trasmiter,strlen(buffer_trasmiter));
-                    // std::cout<<"SERVER"<<buffer_reciever<<std::endl;
-                    // handeling_message(buffer_reciever);
-                    // buffer_trasmiter = handeling_message(buffer_reciever);
                     write(new_socket,manager.manage_message((struct info_pack *)&buffer_reciever),sizeof(buffer_transmiter));
-                    // buffer_trasmiter =funtion that retruns a message from handeling message 
                 }
             }
         }else {
