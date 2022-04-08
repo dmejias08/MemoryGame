@@ -9,6 +9,8 @@
 #include <sstream>
 #include "handeling_message.h"
 #include <vector>
+#include <cstdlib>
+#include <ctime> 
 
 #ifndef WX_PRECOMP
     #include <wx/wx.h>
@@ -27,9 +29,9 @@ class MyFrame : public wxFrame
 public:
     wxStaticText *label_play1;
     wxStaticText *label_play2;
-    int current_player = 1;
-    int player1 = 1;
-    int player2 = 2;
+    wxStaticText *lb_play1_points;
+    wxStaticText *lb_play2_points;
+    int current_player;
     std::vector<wxBitmapButton*> vector_buttons;
     int old_id;
     int clicks=1;
@@ -37,15 +39,14 @@ public:
     MyFrame(int i , int j);
  
 private:
+    void update_turn(int player);
     void updateLabel(int player, int points);
     const char* manage_response(int response);
     void image_manager(int id,const char* card, int response);
     void resetImage(int id, int responsess);
     void showImage(int id, const char* card);
     void OnClick(wxCommandEvent& event);
-    void OnHello(wxCommandEvent& event);
     void OnExit(wxCommandEvent& event);
-    void OnAbout(wxCommandEvent& event);
 };
 
 class MyFrameStart : public wxFrame
@@ -84,8 +85,8 @@ bool MyApp::OnInit()
 {
     // MyFrameInit *frame_init = new MyFrameInit();
     // frame_init->Show(true);
-    MyFrameStart *frameStart = new MyFrameStart(); // estos parametros los debe enviar servidor
-    frameStart->Show(true);
+    MyFrame *frame = new MyFrame(6,5); // estos parametros los debe enviar servidor
+    frame->Show(true);
     return true;
 }
  
@@ -111,6 +112,18 @@ void MyFrameStart::OnClick(wxCommandEvent& event){
     // jug2 = this->entry2->GetLineText(this->param2);
     MyFrame *frame = new MyFrame(6,5); // estos parametros los debe enviar servidor
     frame->Show(true);
+    srand(time(0));
+    frame->current_player = rand()%2+1;
+    struct info_pack request;
+    request.type_message = 1; // call game class 
+    request.current_player = frame->current_player;
+    this->client.conexion(request);
+    cout<<"Paquete enviado"<<endl;
+
+    int player = this->client.current_player;
+    cout<< "El jugador de turno es: "<<player<<endl;
+
+
     this->Show(false);
 }
 
@@ -121,7 +134,7 @@ MyFrame::MyFrame(int i, int j ): wxFrame(NULL, wxID_ANY, "Memory Game",wxDefault
     int name = 0;
     for(int m = 1; m < i+1 ; m++){
         for (int n = 1; n < j+1 ; n++){
-            wxBitmapButton *btn =new wxBitmapButton(this, m*10 +n , wxBitmap("card.png", wxBITMAP_TYPE_PNG), wxPoint(x, y), wxSize(120,120));
+            wxBitmapButton *btn =new wxBitmapButton(this, m*10 +n , wxBitmap("assets/card.png", wxBITMAP_TYPE_PNG), wxPoint(x, y), wxSize(120,120));
             this->vector_buttons.push_back(btn);
             x = x + 120;
             btn->SetFocus();
@@ -131,23 +144,49 @@ MyFrame::MyFrame(int i, int j ): wxFrame(NULL, wxID_ANY, "Memory Game",wxDefault
         y = y + 120;
     }
     Centre();
-    this->label_play1 = new wxStaticText(this, 101, wxT("0"),wxPoint(900,100) );
-    this->label_play2 = new wxStaticText(this, 102, wxT("0"),wxPoint(900,300) );
+    this->label_play1 = new wxStaticText(this, 101, wxT("Jugador 1: "),wxPoint(700,100) );
+    this->label_play2 = new wxStaticText(this, 102, wxT("Jugador 2: "),wxPoint(700,300) );
+    this->lb_play1_points = new wxStaticText(this, 103, wxT("0"),wxPoint(900,100) );
+    this->lb_play2_points = new wxStaticText(this, 104, wxT("0"),wxPoint(900,300) );
+    
+    this->label_play1->SetForegroundColour( wxColor(*wxBLUE));
+    this->label_play2->SetForegroundColour( wxColor(*wxBLUE));
+
+    srand(time(0));
+    this->current_player = 1;
+    // struct info_pack request;
+    // request.type_message = 1; // call game class 
+    // request.current_player = this->current_player;
+    // this->client.conexion(request);
+    // cout<<"Paquete enviado"<<endl;
+    // int player = this->client.current_player;
+    // cout<< "El jugador de turno es: "<<player<<endl;
+    update_turn(this->current_player);
+
     wxButton *btn_exit =new wxButton(this,100, wxT("EXIT"), wxPoint(900,700));
     btn_exit->SetFocus();
-    const char* points = "10";
-    // char *point[sizeof(int)] = (char[sizeof(int)]*)&points;
-    // std::cout<<"pont es"<<point<<std::endl;
-    this->label_play1->SetLabel(points);
     Connect(100, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MyFrame::OnExit));
-    // Bind(wxEVT_MENU, &MyFrame::OnExit, this, wxID_EXIT);
+    wxMessageBox("El turno es indicado por el cambio de color. [Rojo indica que es su turno]");
+    // Bind(wxEVT_MENU, &MyFrame::OnExit, this, wxID_EXIT); 
+}
+
+void MyFrame::update_turn(int player){
+    if (player == 1){
+        this->label_play1->SetForegroundColour( wxColor(*wxRED));
+        this->label_play2->SetForegroundColour( wxColor(*wxBLUE));
+    }else{
+        this->label_play2->SetForegroundColour( wxColor(*wxRED));
+        this->label_play1->SetForegroundColour( wxColor(*wxBLUE));
+    }
 }
 void MyFrame::updateLabel(int player, int points){
-    char *point = (char*)&points;
+    std::string point = std::to_string(points);
+    cout<<"[puntos]"<<point<<endl;
+    cout<<"[puntos]"<<points<<endl;
     if(player == 1){
-        this->label_play1->SetLabel(point);
+        this->lb_play1_points->SetLabel(point);
     }else{
-        this->label_play1->SetLabel(point);
+        this->lb_play2_points->SetLabel(point);
     }
 }
 const char*  MyFrame::manage_response(int response){
@@ -184,9 +223,9 @@ void MyFrame::resetImage(int id, int response){
         if(this->vector_buttons[i]->GetId()==id){
             if(response == 1){
                 this->vector_buttons[i]->Enable(false);
-                this->vector_buttons[i]->SetBitmapLabel(wxBitmap("Check.png", wxBITMAP_TYPE_PNG));
+                this->vector_buttons[i]->SetBitmapLabel(wxBitmap("assets/Check.png", wxBITMAP_TYPE_PNG));
             }else{
-                this->vector_buttons[i]->SetBitmapLabel(wxBitmap("card.png", wxBITMAP_TYPE_PNG));
+                this->vector_buttons[i]->SetBitmapLabel(wxBitmap("assets/card.png", wxBITMAP_TYPE_PNG));
             }
         }
     }
@@ -206,10 +245,12 @@ void MyFrame::OnClick(wxCommandEvent& event)
     struct info_pack request;
     int id = event.GetId();
     request.id = id;
-    request.type_message = 0;
+    request.type_message = 0; // revisar cartas 
     request.card_type = 0;
     request.current_player = this->current_player;
-
+    request.player_points = 0;
+    request.points = 0;
+    request.winner = 0;
     std::cout<<"es id de boton "<<id<<std::endl;
 
 
@@ -218,36 +259,49 @@ void MyFrame::OnClick(wxCommandEvent& event)
 
     int cardtype = this->client.card_type;
     int response = this->client.response;
-    this->current_player = this->client.current_player;
     int points = this->client.points;
+    this->current_player = this->client.current_player;
+    int point_player = this->client.player_points;
+
     const char*  card;
 
     switch (cardtype)
     {
     case 1:
-        card = "Dog.png";
+        card = "assets/Dog.png";
         image_manager(id ,card, response);
         break;
     case 2:
-        card = "Cat.png";
+        card = "assets/Cat.png";
         image_manager(id, card, response);
         break;
     case 3:
-        card = "Cow.png";
+        card = "assets/Cow.png";
         image_manager(id, card, response );
         break;
     case 4:
-        card = "Pig.png";
+        card = "assets/Pig.png";
         image_manager(id, card, response );
         break;
     case 5:
-        card = "Hen.png";
+        card = "assets/Hen.png";
         image_manager(id, card, response );
         break;
     default:
-        wxMessageBox("NONE");   
+        wxMessageBox("NONE"); 
+        break;  
     }
-    updateLabel(this->current_player, points);
+    if(request.points != 0){
+        updateLabel(this->client.player_points, this->client.points);
+        update_turn(this->current_player);
+    }
+    // if (this->=! 0){
+    //     // Hacer un static text que diga el nombre del ganador 
+    // }else{
+    //     updateLabel(player_points, points);
+    //     update_turn(this->current_player);
+    // }
+
     
 }
 

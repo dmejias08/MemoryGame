@@ -13,25 +13,22 @@ struct info_pack* Handeling_message::manage_message(struct info_pack *message){
             int j1 = id_card1%10;
             Card card1 = this->memory->get_card(i1,j1);
             this->flag_card1 = this->memory->flag;
-            // std::cout<<"el id1 del boton es: "<<this->id_card1<<std::endl;
             message->id = 0; //need to click one more card
             message->card_type = card1.type;
             return message;
         }else{
-            // std::cout<<"El segundo id "<<message->id<<std::endl;
             this->id_card2 = message->id;
-            // std::cout<<"el id1 del boton es: "<<this->id_card1<<std::endl;
-            // std::cout<<"el id2 del boton es: "<<this->id_card2<<std::endl;
             int i2 = id_card2/10;
             int j2 = id_card2%10;
             Card card2 = this->memory->get_card(i2,j2);
             this->flag_card2 = this->memory->flag;
             int result = check_equals(this->id_card1, card2);
+            message->points = this->game->assign_points(result);
+            message->current_player = this->game->next_turn();
+            message->player_points = this->game->assing_points_to();
             message->id = result;
-            int points = assign_point(result);
-            message->points = points;
-            message->current_player = this->current_player;
             message->card_type = card2.type;
+
             this->id_card1 =0;
             this->id_card2 =0;
             return message;
@@ -64,26 +61,26 @@ int Handeling_message::check_equals(int id1, Card card2){
     return 2;
 }
 
-int Handeling_message::assign_points(int result){
-    if(this->current_player == 1){
-        if(result == 1){
-            this->ptos_jug1 += 10;
+// int Handeling_message::assign_points(int result){
+//     if(this->current_player == 1){
+//         if(result == 1){
+//             this->ptos_jug1 += 10;
 
-        }else{
-            this->ptos_jug1 -= 2;
-            this->current_player = 2;
-        }
-        return this->ptos_jug1;
-    }else{
-        if(result == 1){
-            this->ptos_jug2 += 10;
+//         }else{
+//             this->ptos_jug1 -= 2;
+//             this->current_player = 2;
+//         }
+//         return this->ptos_jug1;
+//     }else{
+//         if(result == 1){
+//             this->ptos_jug2 += 10;
 
-        }else{
-            this->ptos_jug2 -= 2;
-            this->current_player = 1;
-        }
-        return this->ptos_jug2; 
-    }
-}
+//         }else{
+//             this->ptos_jug2 -= 2;
+//             this->current_player = 1;
+//         }
+//         return this->ptos_jug2; 
+//     }
+// }
 
 

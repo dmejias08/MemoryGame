@@ -3,6 +3,8 @@
 #include "client.h"
 #include "memory_managment.h"
 #include "memory_managment.cpp"
+#include "game.h"
+#include "game.cpp"
 
 class Handeling_message{
 
@@ -16,11 +18,12 @@ class Handeling_message{
     
 
     public:
-    Memory_managment *memory = new Memory_managment();
     int id_card1=0;
     int id_card2=0;
     int card_type1, card_type2;
+    Memory_managment *memory = new Memory_managment();
     Handeling_message();
+    Game *game = new Game();
     struct info_pack* manage_message(struct info_pack *message);
     int check_equals(int id1, Card card2);
     int assign_points(int result);

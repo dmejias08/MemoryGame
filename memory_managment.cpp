@@ -97,27 +97,19 @@ void Memory_managment::generate_vector(int size){
     this->vector_card.clear();
     this->vect_pos.clear();
     this->size_vector = size;
-    // int int_vector = 6;
     int i;
     int j;
     int n =0;
     while(true){
         if(n >= size){
-            // cout<<"cerrando ciclos"<<endl;
             break;
         }else{
             i = rand()%6+1;
             j = rand()%5+1;
-            // cout<<"Estoy en Else"<<endl;
-            // cout<<verify(i*10+j)<<endl;
             if (verify(i*10+j)){
-                // cout<<"generate position: "<<"("<<i<<","<<j<<")"<<endl;
                 Card card_temp = get_card_from_file(i,j);
-                // cout<<"Carta cargada con exito"<<endl;
                 if (card_temp.status != 1){
-                    // cout<<"Meter carta en vector"<<endl;
                     this->vector_card.push_back(card_temp);
-                    // cout<<"Estoy despues de pushback"<<endl;
                     n++;
                 }
             }
@@ -174,15 +166,12 @@ void Memory_managment::delete_cards(Card card){
                 set_card_to_file(old_i, old_j, old_type, old_status);
                 cout<<"Delete card: ";
                 this->vector_card[n].print();
-                // this->vector_card.erase(this->vector_card.begin()+n);
             }
         }
 }
 void Memory_managment::shuffle(){
     this->card_unused = this->card_unused - 2;
     this->size_vector = this->card_unused / 3;
-    cout<<"Print vector con elementos borrados"<<endl;
-    print_vector();
     cout<<"Print despues de suffle"<<endl;
     generate_vector(this->size_vector);
     cout<< "new vector despues de suffle"<<endl;

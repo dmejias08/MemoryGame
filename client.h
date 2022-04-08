@@ -11,7 +11,7 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 #define PORT 8080
-#define server_ip "192.168.0.39"
+#define server_ip "192.168.0.40"
 
 struct info_pack
 {
@@ -20,6 +20,8 @@ struct info_pack
     int card_type;
     int current_player;
     int points;
+    int player_points;
+    int winner;
 };
 
 
@@ -34,10 +36,12 @@ class Client{
     // char buffer_reciever[1024];
     
     public:
+    int winner = 0;
     int response;
     int card_type;
     int current_player;
     int points;
+    int player_points;
     // char img; 
     struct info_pack request;
     Client();
