@@ -21,7 +21,6 @@ struct info_pack
     int current_player;
     int points;
     int player_points;
-    int winner;
 };
 
 
@@ -36,7 +35,6 @@ class Client{
     // char buffer_reciever[1024];
     
     public:
-    int winner = 0;
     int response;
     int card_type;
     int current_player;
