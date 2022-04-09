@@ -19,7 +19,6 @@ struct simple_card
 Memory_managment::Memory_managment(){
     create_file();
     cout<<"file created"<<endl;
-    print_file();
     cout<<"vector"<<endl;
     generate_vector(10);
     print_vector();

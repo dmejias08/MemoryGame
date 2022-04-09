@@ -125,7 +125,7 @@ void MyFrame::update_turn(int player){
     if (player == 1){
         this->label_play1->SetForegroundColour( wxColor(*wxRED));
         this->label_play2->SetForegroundColour( wxColor(*wxBLUE));
-    }else{
+    }else if(player ==2){
         this->label_play2->SetForegroundColour( wxColor(*wxRED));
         this->label_play1->SetForegroundColour( wxColor(*wxBLUE));
     }
@@ -136,7 +136,7 @@ void MyFrame::updateLabel(int player, int points){
     cout<<"[puntos]"<<points<<endl;
     if(player == 1){
         this->lb_play1_points->SetLabel(point);
-    }else{
+    }else if(player == 2){
         this->lb_play2_points->SetLabel(point);
     }
 }
@@ -237,11 +237,11 @@ void MyFrame::OnClick(wxCommandEvent& event)
     default:
         wxMessageBox("NONE");   
     }
-    if(points != 0 ){
+
     update_turn(this->current_player);
-    updateLabel(this->client.player_points, this->client.points);
-    }
-    update_turn(this->current_player);
+    // updateLabel(this->client.player_points, this->client.points);
+    // update_turn(this->current_player);
+    updateLabel(point_player, this->client.points);
 
 
     }

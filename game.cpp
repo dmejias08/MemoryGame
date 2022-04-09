@@ -10,19 +10,20 @@ int Game::assign_points(int response){
             this->points_player1 += 10;
             this->player_points =this->current_player;
         }else{
-
+            this->player_points = 1;
             this->current_player = 2;
         }
-        cout<<"[puntos]"<<points_player1<<endl;
+        cout<<"[puntos] de player 1 "<<points_player1<<endl;
         return this->points_player1;
     }else{
         if(response == 1){
             this->points_player2 += 10;
             this->player_points =this->current_player;
         }else{
+            this->player_points = 2;
             this->current_player = 1;
         }
-        cout<<"[puntos]"<<points_player2<<endl;
+        cout<<"[puntos] de player 2 "<<points_player2<<endl;
         return this->points_player2; 
     }
 }
