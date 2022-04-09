@@ -1,6 +1,3 @@
-// wxWidgets "Hello World" Program
- 
-// For compilers that support precompilation, includes "wx/wx.h".
 #include <wx/wxprec.h>
 #include <iostream>
 #include <string>
@@ -24,6 +21,8 @@ public:
 class MyFrame : public wxFrame
 {
 public:
+    wxString player1;
+    wxString player2;
     wxStaticText *label_play1 = new wxStaticText(this, 101, wxT("Jugador 1: "),wxPoint(700,100) );
     wxStaticText *label_play2 = new wxStaticText(this, 102, wxT("Jugador 2: "),wxPoint(700,300) );
     wxStaticText *lb_play1_points;
@@ -65,18 +64,19 @@ wxIMPLEMENT_APP(MyApp);
  
 bool MyApp::OnInit()
 {
-
-    // MyFrame *frame = new MyFrame(6,5);
-    // frame->Show(true);
     MyFrameStart *frame1 = new MyFrameStart();
     frame1->Show(true);
     return true;
 }
  
 MyFrameStart ::MyFrameStart() :wxFrame(NULL, wxID_ANY, "Memory Game Start",wxDefaultPosition, wxSize(500, 500)){
-    this->tc1 = new wxTextCtrl(this, wxID_ANY, wxT(""),wxPoint(5,100));
-    this->tc2 = new wxTextCtrl(this, wxID_ANY, wxT(""), wxPoint(150,100));
-    wxButton *btn_start =new wxButton(this,1, wxT("START"), wxPoint(300,400));
+    wxStaticText *label1 = new wxStaticText(this, wxID_ANY, wxT("Welcome to Memory Game"),wxPoint(150,20) );
+    wxStaticText *label2 = new wxStaticText(this, wxID_ANY, wxT("Write your nicknames"),wxPoint(77,100) );
+    wxStaticText *label3 = new wxStaticText(this, wxID_ANY, wxT("Player 1"),wxPoint(5,150) );
+    wxStaticText *label4 = new wxStaticText(this, wxID_ANY, wxT("Player 2"),wxPoint(150,150) );
+    this->tc1 = new wxTextCtrl(this, wxID_ANY, wxT(""),wxPoint(5,175));
+    this->tc2 = new wxTextCtrl(this, wxID_ANY, wxT(""), wxPoint(150,175));
+    wxButton *btn_start =new wxButton(this,1, wxT("START"), wxPoint(300,350));
     wxButton *btn_save =new wxButton(this,2, wxT("SAVE PLAYERS"), wxPoint(300,300));
     btn_start->SetFocus();
     btn_save->SetFocus();
@@ -89,9 +89,9 @@ void MyFrameStart::OnSave(wxCommandEvent& event){
         this->player1 = this->tc1->GetValue();
         this->player2 = this->tc2->GetValue();
         cout<<player1<<" "<<player2<<endl; 
-        wxMessageBox("[Saved player] click Start");
+        wxMessageBox("[Saved players] click Start");
     }else{
-        wxMessageBox("Agregue los nombres de jugadores");  
+        wxMessageBox("[Warning] Add player's name");  
     }
     
 }
@@ -101,6 +101,8 @@ void MyFrameStart::OnClick(wxCommandEvent& event){
     MyFrame *frame = new MyFrame(6,5);
     frame->label_play1->SetLabel(this->player1);
     frame->label_play2->SetLabel(this->player2);
+    frame->player1 = this->player1;
+    frame->player2 = this->player2;
     frame->Show(true);
 
 
@@ -124,8 +126,8 @@ MyFrame::MyFrame(int i, int j ): wxFrame(NULL, wxID_ANY, "Memory Game",wxDefault
         y = y + 120;
     }
     Centre();
-    // this->label_play1 = new wxStaticText(this, 101, wxT("Jugador 1: "),wxPoint(700,100) );
-    // this->label_play2 = new wxStaticText(this, 102, wxT("Jugador 2: "),wxPoint(700,300) );
+    wxStaticText *label_play1 = new wxStaticText(this, 101, wxT("Players "),wxPoint(700,50));
+    wxStaticText *lb_points = new wxStaticText(this, 104, wxT("Points"),wxPoint(900,50) );
     this->lb_play1_points = new wxStaticText(this, 103, wxT("0"),wxPoint(900,100) );
     this->lb_play2_points = new wxStaticText(this, 104, wxT("0"),wxPoint(900,300) );
     
@@ -134,20 +136,12 @@ MyFrame::MyFrame(int i, int j ): wxFrame(NULL, wxID_ANY, "Memory Game",wxDefault
 
     srand(time(0));
     this->current_player = 1;
-    // struct info_pack request;
-    // request.type_message = 1; // call game class 
-    // request.current_player = this->current_player;
-    // this->client.conexion(request);
-    // cout<<"Paquete enviado"<<endl;
-    // int player = this->client.current_player;
-    // cout<< "El jugador de turno es: "<<player<<endl;
     update_turn(this->current_player);
 
     wxButton *btn_exit =new wxButton(this,100, wxT("EXIT"), wxPoint(900,700));
     btn_exit->SetFocus();
     Connect(100, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MyFrame::OnExit));
-    wxMessageBox("El turno es indicado por el cambio de color. [Rojo indica que es su turno]");
-    // Bind(wxEVT_MENU, &MyFrame::OnExit, this, wxID_EXIT); 
+    wxMessageBox("Each turn your name changes color. [Red indicates your turn]");
 }
 
 void MyFrame::update_turn(int player){
@@ -173,9 +167,9 @@ const char*  MyFrame::manage_response(int response){
         if(response == 0){
             return "Falta presionar una carta";
         }else if(response== 1){
-            return "Las cartas son iguales";
+            return "Congrats: You found a match";
         }else{
-            return "Las cartas son diferentes";
+            return "Watch out next turn";
         }
 }
 void MyFrame::image_manager(int id,const char* card, int response){
@@ -228,6 +222,7 @@ void MyFrame::OnClick(wxCommandEvent& event)
     request.type_message = 0;
     request.card_type = 0;
     request.points = 0;
+    request.winner = 0;
 
     std::cout<<"es id de boton "<<id<<std::endl;
 
@@ -239,19 +234,20 @@ void MyFrame::OnClick(wxCommandEvent& event)
     int points = this->client.points;
     this->current_player = this->client.current_player;
     int point_player = this->client.player_points;
+    int winner = this->client.winner;
     const char*  card;
 
     switch (cardtype)
     {
-    case 1://dog
+    case 1:
         card = "assets/Dog.png";
         image_manager(id ,card, response);
         break;
-    case 2://cat
+    case 2:
         card = "assets/Cat.png";
         image_manager(id, card, response);
         break;
-    case 3://cow
+    case 3:
         card = "assets/Cow.png";
         image_manager(id, card, response );
         break;
@@ -264,16 +260,20 @@ void MyFrame::OnClick(wxCommandEvent& event)
         image_manager(id, card, response );
         break;
     default:
-        wxMessageBox("NONE");   
+        wxMessageBox("[Connection error] Restart the game");   
     }
 
     update_turn(this->current_player);
-    // updateLabel(this->client.player_points, this->client.points);
-    // update_turn(this->current_player);
     updateLabel(point_player, this->client.points);
-
-
+    if(winner == 1){
+        wxMessageBox("The winner is " +  this->player1);
+        wxMessageBox("Click on exit");   
+    }else if(winner == 2){
+        wxMessageBox("The winner is " + this->player2);
+        wxMessageBox("Click on exit");   
     }
+
+}
 
     
     

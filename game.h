@@ -10,8 +10,11 @@ class Game{
     void assign_turns(int player);
     int next_turn();
     int assing_points_to();
+    int determine_winner();
 
     private:
+    int winner = 0;
+    int unused_cards = 30;
     int points_player1 = 0;
     int points_player2 = 0;
     int current_player = 1;

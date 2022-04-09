@@ -30,6 +30,7 @@ struct info_pack* Handeling_message::manage_message(struct info_pack *message){
             message->points = this->game->assign_points(result);
             message->current_player = this->game->next_turn();
             message->player_points = this->game->assing_points_to();
+            message->winner = this->game->determine_winner();
             message->id = result;
             message->card_type = card2.type;
             this->id_card1 =0;

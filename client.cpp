@@ -47,7 +47,7 @@ void Client::conexion(struct info_pack position_btn){
         this->response = ((struct info_pack*)&buffer_reciever)->id;
         this->card_type = ((struct info_pack*)&buffer_reciever)->card_type;
         this->player_points = ((struct info_pack*)&buffer_reciever)->player_points;
-        // this->img = ((struct info_pack*)&buffer_reciever)->img;                          
+        this->winner = ((struct info_pack*)&buffer_reciever)->winner;
         if(this->response == 0){
             std::cout<<"Cliente: falta presionar una carta "<<std::endl;
         }else if(this->response== 1){
