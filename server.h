@@ -11,7 +11,7 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 #include <string>
-#define PORT 8000
+#define PORT 8080
 #define server_ip "192.168.0.40"
 #include "handeling_message.h"
 #include "handeling_message.cpp"

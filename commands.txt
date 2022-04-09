@@ -3,3 +3,4 @@ g++ interface.cpp `wx-config --cxxflags --libs std` -o program
 FALTA:
 -que el server logre cambiar las dimensiones del tablero 
 -hacer un archivo en bash que ejecute el programa
+- Si queda tiempo arreglar que solo pueda tocar el boton una vez 

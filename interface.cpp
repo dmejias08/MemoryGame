@@ -24,8 +24,8 @@ public:
 class MyFrame : public wxFrame
 {
 public:
-    wxStaticText *label_play1;
-    wxStaticText *label_play2;
+    wxStaticText *label_play1 = new wxStaticText(this, 101, wxT("Jugador 1: "),wxPoint(700,100) );
+    wxStaticText *label_play2 = new wxStaticText(this, 102, wxT("Jugador 2: "),wxPoint(700,300) );
     wxStaticText *lb_play1_points;
     wxStaticText *lb_play2_points;
     int current_player =1;;
@@ -45,38 +45,67 @@ private:
     void OnClick(wxCommandEvent& event);
     void OnExit(wxCommandEvent& event);
 };
-// class MyFrameInit : public wxFrame
-// {
-// public:
-    // MyFrameInit();
-// private:
-    // void OnEntry(wxCommandEvent& event);
-    // void OnHello(wxCommandEvent& event);
-    // void OnExit(wxCommandEvent& event);
-    // void OnAbout(wxCommandEvent& event);
-// };
-// enum
-// {
-    // ID_Hello = 1
-// };
+
+class MyFrameStart : public wxFrame
+{
+public:
+    wxTextCtrl *tc1;
+    wxTextCtrl *tc2;
+    wxString player1;
+    wxString player2;
+    MyFrameStart();
+ 
+private:
+
+    void OnClick(wxCommandEvent& event);
+    void OnSave(wxCommandEvent& event);
+};
  
 wxIMPLEMENT_APP(MyApp);
  
 bool MyApp::OnInit()
 {
-    // MyFrameInit *frame_init = new MyFrameInit();
-    // frame_init->Show(true);
-    MyFrame *frame = new MyFrame(6,5); // estos parametros los debe enviar servidor
-    frame->Show(true);
+
+    // MyFrame *frame = new MyFrame(6,5);
+    // frame->Show(true);
+    MyFrameStart *frame1 = new MyFrameStart();
+    frame1->Show(true);
     return true;
 }
  
+MyFrameStart ::MyFrameStart() :wxFrame(NULL, wxID_ANY, "Memory Game Start",wxDefaultPosition, wxSize(500, 500)){
+    this->tc1 = new wxTextCtrl(this, wxID_ANY, wxT(""),wxPoint(5,100));
+    this->tc2 = new wxTextCtrl(this, wxID_ANY, wxT(""), wxPoint(150,100));
+    wxButton *btn_start =new wxButton(this,1, wxT("START"), wxPoint(300,400));
+    wxButton *btn_save =new wxButton(this,2, wxT("SAVE PLAYERS"), wxPoint(300,300));
+    btn_start->SetFocus();
+    btn_save->SetFocus();
+    Connect(1, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MyFrameStart::OnClick));
+    Connect(2, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MyFrameStart::OnSave));
+}
+
+void MyFrameStart::OnSave(wxCommandEvent& event){
+    if (this->tc1->IsEmpty()==false && this->tc2->IsEmpty()== false){
+        this->player1 = this->tc1->GetValue();
+        this->player2 = this->tc2->GetValue();
+        cout<<player1<<" "<<player2<<endl; 
+        wxMessageBox("[Saved player] click Start");
+    }else{
+        wxMessageBox("Agregue los nombres de jugadores");  
+    }
+    
+}
+
+void MyFrameStart::OnClick(wxCommandEvent& event){
+
+    MyFrame *frame = new MyFrame(6,5);
+    frame->label_play1->SetLabel(this->player1);
+    frame->label_play2->SetLabel(this->player2);
+    frame->Show(true);
 
 
-// MyFrameInit::MyFrameInit():wxFrame(NULL, wxID_ANY, "Memory Game Entry",wxDefaultPosition, wxSize(800, 600))
-// {
-// 
-// }
+}
+
 
 MyFrame::MyFrame(int i, int j ): wxFrame(NULL, wxID_ANY, "Memory Game",wxDefaultPosition, wxSize(1000, 800))
 {
@@ -85,7 +114,7 @@ MyFrame::MyFrame(int i, int j ): wxFrame(NULL, wxID_ANY, "Memory Game",wxDefault
     int name = 0;
     for(int m = 1; m < i+1 ; m++){
         for (int n = 1; n < j+1 ; n++){
-            wxBitmapButton *btn =new wxBitmapButton(this, m*10 +n , wxBitmap("card.png", wxBITMAP_TYPE_PNG), wxPoint(x, y), wxSize(120,120));
+            wxBitmapButton *btn =new wxBitmapButton(this, m*10 +n , wxBitmap("assets/card.png", wxBITMAP_TYPE_PNG), wxPoint(x, y), wxSize(120,120));
             this->vector_buttons.push_back(btn);
             x = x + 120;
             btn->SetFocus();
@@ -95,8 +124,8 @@ MyFrame::MyFrame(int i, int j ): wxFrame(NULL, wxID_ANY, "Memory Game",wxDefault
         y = y + 120;
     }
     Centre();
-    this->label_play1 = new wxStaticText(this, 101, wxT("Jugador 1: "),wxPoint(700,100) );
-    this->label_play2 = new wxStaticText(this, 102, wxT("Jugador 2: "),wxPoint(700,300) );
+    // this->label_play1 = new wxStaticText(this, 101, wxT("Jugador 1: "),wxPoint(700,100) );
+    // this->label_play2 = new wxStaticText(this, 102, wxT("Jugador 2: "),wxPoint(700,300) );
     this->lb_play1_points = new wxStaticText(this, 103, wxT("0"),wxPoint(900,100) );
     this->lb_play2_points = new wxStaticText(this, 104, wxT("0"),wxPoint(900,300) );
     
@@ -174,9 +203,9 @@ void MyFrame::resetImage(int id, int response){
         if(this->vector_buttons[i]->GetId()==id){
             if(response == 1){
                 this->vector_buttons[i]->Enable(false);
-                this->vector_buttons[i]->SetBitmapLabel(wxBitmap("Check.png", wxBITMAP_TYPE_PNG));
+                this->vector_buttons[i]->SetBitmapLabel(wxBitmap("assets/Check.png", wxBITMAP_TYPE_PNG));
             }else{
-                this->vector_buttons[i]->SetBitmapLabel(wxBitmap("card.png", wxBITMAP_TYPE_PNG));
+                this->vector_buttons[i]->SetBitmapLabel(wxBitmap("assets/card.png", wxBITMAP_TYPE_PNG));
             }
         }
     }
@@ -215,23 +244,23 @@ void MyFrame::OnClick(wxCommandEvent& event)
     switch (cardtype)
     {
     case 1://dog
-        card = "Dog.png";
+        card = "assets/Dog.png";
         image_manager(id ,card, response);
         break;
     case 2://cat
-        card = "Cat.png";
+        card = "assets/Cat.png";
         image_manager(id, card, response);
         break;
     case 3://cow
-        card = "Cow.png";
+        card = "assets/Cow.png";
         image_manager(id, card, response );
         break;
     case 4:
-        card = "Pig.png";
+        card = "assets/Pig.png";
         image_manager(id, card, response );
         break;
     case 5:
-        card = "Hen.png";
+        card = "assets/Hen.png";
         image_manager(id, card, response );
         break;
     default:
