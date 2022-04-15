@@ -104,7 +104,6 @@ void MyFrameStart::OnClick(wxCommandEvent& event){
     frame->label_play2->SetLabel(this->player2);
     frame->player1 = this->player1;
     frame->player2 = this->player2;
-    // frame->parent = this;
     frame->Show(true);
     Close(true);
 

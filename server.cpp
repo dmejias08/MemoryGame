@@ -53,7 +53,7 @@ Server::Server(){
                     break;
                 }else if (len_request==0){//did not send 
                     std::cout<<"Socket closed"<<std::endl;
-                    close(new_socket);
+                    // close(new_socket);
                     break;
                 }else if(((struct info_pack *)&buffer_reciever)->type_message == -1){
                     delete this->manager.memory;
