@@ -16,6 +16,8 @@ struct info_pack* Handeling_message::manage_message(struct info_pack *message){
             // std::cout<<"el id1 del boton es: "<<this->id_card1<<std::endl;
             message->id = 0; //need to click one more card
             message->card_type = card1.type;
+            message->punish_player = 0;
+            message->punish_points = 0;
             return message;
         }else{
             // std::cout<<"El segundo id "<<message->id<<std::endl;
@@ -31,6 +33,8 @@ struct info_pack* Handeling_message::manage_message(struct info_pack *message){
             message->current_player = this->game->next_turn();
             message->player_points = this->game->assing_points_to();
             message->winner = this->game->determine_winner();
+            message->punish_player = this->game->f_punish_player();
+            message->punish_points = this->game->f_punish_points();
             message->id = result;
             message->card_type = card2.type;
             this->id_card1 =0;
@@ -48,6 +52,7 @@ int Handeling_message::check_equals(int id1, Card card2){
     // int j2 = id2%10;
     // Card card2 = this->memory->get_card(i2,j2);
     Card card1 = this->memory->get_card(i1,j1);
+    this->memory->page_hits -= 1;
     std::cout<<"La carta1 es ";
     card1.print();
     std::cout<<"La carta2 es ";

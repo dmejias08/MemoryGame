@@ -48,6 +48,8 @@ void Client::conexion(struct info_pack position_btn){
         this->card_type = ((struct info_pack*)&buffer_reciever)->card_type;
         this->player_points = ((struct info_pack*)&buffer_reciever)->player_points;
         this->winner = ((struct info_pack*)&buffer_reciever)->winner;
+        this->punish_points = ((struct info_pack*)&buffer_reciever)->punish_points;
+        this->punish_player = ((struct info_pack*)&buffer_reciever)->punish_player;
         if(this->response == 0){
             std::cout<<"Cliente: falta presionar una carta "<<std::endl;
         }else if(this->response== 1){

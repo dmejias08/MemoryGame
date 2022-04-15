@@ -22,6 +22,8 @@ struct info_pack
     int points;
     int player_points;
     int winner;
+    int punish_points;
+    int punish_player;
 };
 
 
@@ -36,12 +38,14 @@ class Client{
     // char buffer_reciever[1024];
     
     public:
+    int punish_points;
     int winner;
     int response;
     int card_type;
     int current_player;
     int points;
     int player_points;
+    int punish_player;
     // char img; 
     struct info_pack request;
     Client();

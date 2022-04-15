@@ -55,6 +55,7 @@ Card Memory_managment::get_card(int i, int j){
     for(int n = 0; n< limit; n++){
         if (this->vector_card[n].i == i && this->vector_card[n].j == j){
             cout<<"Found object in vector: ";
+            this->page_hits += 1;
             this->vector_card[n].print();
             this->flag= 0;
             // cout<<"return object ";
@@ -64,6 +65,7 @@ Card Memory_managment::get_card(int i, int j){
     }
     if (this->flag == 1){
     cout<<"Did not find object in vector "<<endl;
+    this->page_faults += 1;
     Card card = replace(i,j);
     return card;
     }
@@ -94,6 +96,7 @@ Card Memory_managment::replace(int i, int j){
 void Memory_managment::generate_vector(int size){
     srand(time(0));
     this->vector_card.clear();
+    this->vector_card.shrink_to_fit();
     this->vect_pos.clear();
     this->size_vector = size;
     // int int_vector = 6;
@@ -101,13 +104,10 @@ void Memory_managment::generate_vector(int size){
     int j;
     int n =0;
     while(true){
-
         if(n >= size){
-            
             cout<<"cerrando ciclos"<<endl;
             break;
         }else{
-
             i = rand()%6+1;
             j = rand()%5+1;
             // cout<<"Estoy en Else"<<endl;
@@ -125,7 +125,24 @@ void Memory_managment::generate_vector(int size){
             }
         }
     }
+    int total = memory_consumption();
+    cout<<"SERVER INTERFACE"<<endl;
+    cout<<"**************************************************************************************************"<<endl;
+    cout<<"Memory usage: "<<total<<" the lenght of the vector: "<<this->vector_card.size()<<endl;
+    cout<<"**************************************************************************************************"<<endl;
+    cout<<"Page hits: "<<this->page_hits<<" "<<"Page faults: "<<this->page_faults<<endl;
+    cout<<"**************************************************************************************************"<<endl;
 }
+
+int Memory_managment::memory_consumption(){
+    int total = 0;
+    int size = this->vector_card.size();
+    for(int i = 0; i < size ; i++){
+        total += sizeof(this->vector_card[i]);
+    }
+    return total;
+}
+
 bool Memory_managment::verify(int pos){
     int limit = this->vect_pos.size();
     for (int i =0 ; i<limit ; i++){

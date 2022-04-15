@@ -21,6 +21,7 @@ public:
 class MyFrame : public wxFrame
 {
 public:
+    wxFrame parent;
     wxString player1;
     wxString player2;
     wxStaticText *label_play1 = new wxStaticText(this, 101, wxT("Jugador 1: "),wxPoint(700,100) );
@@ -103,7 +104,9 @@ void MyFrameStart::OnClick(wxCommandEvent& event){
     frame->label_play2->SetLabel(this->player2);
     frame->player1 = this->player1;
     frame->player2 = this->player2;
+    // frame->parent = this;
     frame->Show(true);
+    Close(true);
 
 
 }
@@ -189,6 +192,7 @@ void MyFrame::showImage(int id, const char*card){
     for(int i=0; i<30; i++){
         if(this->vector_buttons[i]->GetId()==id){
             this->vector_buttons[i]->SetBitmapLabel(wxBitmap(card, wxBITMAP_TYPE_PNG));
+            this->vector_buttons[i]->Enable(false);
         }
     }
 }
@@ -200,6 +204,7 @@ void MyFrame::resetImage(int id, int response){
                 this->vector_buttons[i]->SetBitmapLabel(wxBitmap("assets/Check.png", wxBITMAP_TYPE_PNG));
             }else{
                 this->vector_buttons[i]->SetBitmapLabel(wxBitmap("assets/card.png", wxBITMAP_TYPE_PNG));
+                this->vector_buttons[i]->Enable(true);
             }
         }
     }
@@ -235,7 +240,10 @@ void MyFrame::OnClick(wxCommandEvent& event)
     this->current_player = this->client.current_player;
     int point_player = this->client.player_points;
     int winner = this->client.winner;
+    int punish_points = this->client.punish_points;
+    int punish_player = this->client.punish_player;
     const char*  card;
+    cout<<"Punishment "<< punish_player <<" "<<punish_points<<endl; 
 
     switch (cardtype)
     {
@@ -265,6 +273,10 @@ void MyFrame::OnClick(wxCommandEvent& event)
 
     update_turn(this->current_player);
     updateLabel(point_player, this->client.points);
+    if(punish_player != 0 ){
+        wxMessageBox("Furious player, you have to be careful");
+        updateLabel(punish_player, punish_points);
+    }
     if(winner == 1){
         wxMessageBox("The winner is " +  this->player1);
         wxMessageBox("Click on exit");   
@@ -272,6 +284,7 @@ void MyFrame::OnClick(wxCommandEvent& event)
         wxMessageBox("The winner is " + this->player2);
         wxMessageBox("Click on exit");   
     }
+
 
 }
 

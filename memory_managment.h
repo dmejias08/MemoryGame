@@ -28,6 +28,8 @@ class Memory_managment{
     
 
     public:
+    int page_hits;
+    int page_faults;
     int flag; //si es cero entonces está en vector
     Memory_managment();
     Card get_card(int i, int j);
@@ -41,6 +43,7 @@ class Memory_managment{
     void print_file();
     void delete_cards(Card card1);
     bool verify(int pos);
+    int memory_consumption();
 
 };
 
