@@ -31,8 +31,8 @@ Card Memory_managment::get_card_from_file(int i, int j){
             simple_card* card = (simple_card*) buffer;
             Card new_card = Card(card->i,card->j, card->type, card->status);
             new_card.get_image(card->type);
-            // cout<<"Card from file: ";
-            // new_card.print();
+            cout<<"Card from file: ";
+            new_card.print();
             file.close();
             free(buffer);
             buffer = NULL;

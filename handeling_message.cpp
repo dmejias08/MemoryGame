@@ -18,6 +18,8 @@ struct info_pack* Handeling_message::manage_message(struct info_pack *message){
             message->card_type = card1.type;
             message->punish_player = 0;
             message->punish_points = 0;
+            this->img1 = card1.img;
+            message->size = this->img1.size();
             return message;
         }else{
             // std::cout<<"El segundo id "<<message->id<<std::endl;
@@ -37,8 +39,12 @@ struct info_pack* Handeling_message::manage_message(struct info_pack *message){
             message->punish_points = this->game->f_punish_points();
             message->id = result;
             message->card_type = card2.type;
+            this->img2 = card2.img;
+            message->size = this->img2.size();
             this->id_card1 =0;
             this->id_card2 =0;
+            this->id_card11 =0;
+            this->id_card22 =0;
             return message;
         }
     }
@@ -68,6 +74,13 @@ int Handeling_message::check_equals(int id1, Card card2){
             return 1;
     }
     return 2;
+}
+std::string Handeling_message::getImage(){
+    if(this->id_card11 == 0){
+        return this->img1;
+    }else if(this->id_card22 == 0){
+        return this->img2;
+    }
 }
 
 

@@ -50,6 +50,7 @@ void Client::conexion(struct info_pack position_btn){
         this->winner = ((struct info_pack*)&buffer_reciever)->winner;
         this->punish_points = ((struct info_pack*)&buffer_reciever)->punish_points;
         this->punish_player = ((struct info_pack*)&buffer_reciever)->punish_player;
+        this->size = ((struct info_pack*)&buffer_reciever)->size;
         if(this->response == 0){
             std::cout<<"Cliente: falta presionar una carta "<<std::endl;
         }else if(this->response== 1){
@@ -62,3 +63,51 @@ void Client::conexion(struct info_pack position_btn){
     
     close(sock);
 }
+
+void Client::getImage(int indicator){
+
+    sock = socket(AF_INET, SOCK_STREAM, 0);
+    if ( sock < 0)
+    {
+        std::cout<<"\n Socket creation error \n"<<std::endl; 
+    }else{
+        std::cout<<"\n Socket connection succesfully \n"<<std::endl;
+        
+    }
+    memset(&serverAddress, 0, sizeof(serverAddress));
+
+    serverAddress.sin_family = AF_INET;
+    serverAddress.sin_addr.s_addr = inet_addr(server_ip);
+    serverAddress.sin_port = htons(PORT);
+      
+    if (connect(sock, (struct sockaddr *)&serverAddress, sizeof(serverAddress)) < 0)
+    {
+        std::cout<<"\n Connection failed \n"<<std::endl;
+    }else{
+        std::cout<<"\n Connection to server succesfully \n"<<std::endl;
+    }
+    this->image_request.type_message = indicator;
+
+    /* send test sequences*/
+    write(sock, (struct info_pack*)&buffer_transmiter, sizeof(buffer_transmiter));
+    char* temp = (char*)malloc(sizeof(char) * this->size);
+    len_response = read(sock, temp, this->size);
+    for(int i = 0; i < len_response; i++){
+        this->client_img.push_back(*(temp+i));
+    std::cout <<"estoy en el ciclo "<< std::endl;
+    }
+    std::cout << "Control: " << client_img << std::endl;
+
+    if (len_response == -1)
+    {
+        fprintf(stderr, "[CLIENT-error]: connfd cannot be read. %d: %s \n", errno, strerror(errno));
+    }
+    else if (len_response == 0){
+        printf("[CLIENT]: client socket closed \n\n");
+        // break;
+    }
+
+    /* close the socket */
+    close(sock);
+}
+

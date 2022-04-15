@@ -15,6 +15,7 @@
 
 struct info_pack
 {
+    int size;
     int id;
     int type_message;
     int card_type;
@@ -38,6 +39,8 @@ class Client{
     // char buffer_reciever[1024];
     
     public:
+    std::string client_img;
+    int size;
     int punish_points;
     int winner;
     int response;
@@ -48,8 +51,10 @@ class Client{
     int punish_player;
     // char img; 
     struct info_pack request;
+    struct info_pack image_request;
     Client();
     void conexion(struct info_pack position_btn);
+    void getImage(int indicator);
 };
 
 #endif

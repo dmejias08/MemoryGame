@@ -24,6 +24,7 @@ class Card{
     Card(int i , int j , int type , int status);
     void get_image(int type);
     void print();
+    string encodeImage(string picture);
 
 };
 

@@ -1,6 +1,7 @@
 
 #include "server.h"
 #include "game.h"
+
 Server::Server(){
     server= socket(AF_INET, SOCK_STREAM, 0);
     if(server < 0){
@@ -60,8 +61,11 @@ Server::Server(){
                     close(new_socket);
                     this->flag = 1;
                     break;
-                }else{
+                }else if(((struct info_pack *)&buffer_reciever)->type_message == 0){
                     write(new_socket,manager.manage_message((struct info_pack *)&buffer_reciever),sizeof(buffer_transmiter));
+                }else if(((struct info_pack *)&buffer_reciever)->type_message == 1){
+                    server_img = manager.getImage();
+                    write(new_socket, server_img.data(), server_img.size());
                 }
             }
         }else {

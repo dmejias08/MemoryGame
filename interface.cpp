@@ -39,11 +39,12 @@ private:
     void update_turn(int player);
     void updateLabel(int player, int points);
     const char* manage_response(int response);
-    void image_manager(int id,const char* card, int response);
+    void image_manager(int id, int response);
     void resetImage(int id, int responsess);
-    void showImage(int id, const char* card);
+    void showImage(int id);
     void OnClick(wxCommandEvent& event);
     void OnExit(wxCommandEvent& event);
+    int decodeImage(std::string image);
 };
 
 class MyFrameStart : public wxFrame
@@ -174,23 +175,23 @@ const char*  MyFrame::manage_response(int response){
             return "Watch out next turn";
         }
 }
-void MyFrame::image_manager(int id,const char* card, int response){
+void MyFrame::image_manager(int id, int response){
     if (this->clicks == 1){
-        showImage(id, card);
+        showImage(id);
         this->old_id = id;
         this->clicks = 2;
     }else{
-        showImage(id, card);
+        showImage(id);
         wxMessageBox(manage_response(response));
         resetImage(id, response);
         resetImage(this->old_id, response);
         this->clicks = 1;
     }
 }
-void MyFrame::showImage(int id, const char*card){
+void MyFrame::showImage(int id){
     for(int i=0; i<30; i++){
         if(this->vector_buttons[i]->GetId()==id){
-            this->vector_buttons[i]->SetBitmapLabel(wxBitmap(card, wxBITMAP_TYPE_PNG));
+            this->vector_buttons[i]->SetBitmapLabel(wxBitmap("final.png", wxBITMAP_TYPE_PNG));
             this->vector_buttons[i]->Enable(false);
         }
     }
@@ -244,31 +245,37 @@ void MyFrame::OnClick(wxCommandEvent& event)
     const char*  card;
     cout<<"Punishment "<< punish_player <<" "<<punish_points<<endl; 
 
-    switch (cardtype)
-    {
-    case 1:
-        card = "assets/Dog.png";
-        image_manager(id ,card, response);
-        break;
-    case 2:
-        card = "assets/Cat.png";
-        image_manager(id, card, response);
-        break;
-    case 3:
-        card = "assets/Cow.png";
-        image_manager(id, card, response );
-        break;
-    case 4:
-        card = "assets/Pig.png";
-        image_manager(id, card, response );
-        break;
-    case 5:
-        card = "assets/Hen.png";
-        image_manager(id, card, response );
-        break;
-    default:
-        wxMessageBox("[Connection error] Restart the game");   
-    }
+    client.getImage(1);
+    std::string img = this->client.client_img;
+    decodeImage(img);
+
+    image_manager(id, response);
+
+    // switch (cardtype)
+    // {
+    // case 1:
+    //     card = "assets/Dog.png";
+    //     image_manager(id ,card, response);
+    //     break;
+    // case 2:
+    //     card = "assets/Cat.png";
+    //     image_manager(id, card, response);
+    //     break;
+    // case 3:
+    //     card = "assets/Cow.png";
+    //     image_manager(id, card, response );
+    //     break;
+    // case 4:
+    //     card = "assets/Pig.png";
+    //     image_manager(id, card, response );
+    //     break;
+    // case 5:
+    //     card = "assets/Hen.png";
+    //     image_manager(id, card, response );
+    //     break;
+    // default:
+    //     wxMessageBox("[Connection error] Restart the game");   
+    // }
 
     update_turn(this->current_player);
     updateLabel(point_player, this->client.points);
@@ -286,6 +293,21 @@ void MyFrame::OnClick(wxCommandEvent& event)
 
 
 }
+int MyFrame::decodeImage(std::string image){
+    ofstream image_file("final.png", ios::out | ios::trunc);
+    char ch;
+    while (image.size() > 0)
+    {
+        ch = image.substr(0,1).c_str()[0];
+        image_file.put(ch);
+        image = image.substr(1);
+
+    }
+    cout<<"Reloaded Successfully"<<endl;
+    image_file.clear();
+    return 0;
+}
+
 
     
     

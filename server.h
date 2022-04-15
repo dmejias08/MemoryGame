@@ -16,6 +16,7 @@
 #include "handeling_message.h"
 #include "handeling_message.cpp"
 
+
 class Server{
     private: 
     int server, new_socket;
@@ -27,6 +28,7 @@ class Server{
     int server_len;
     struct info_pack buffer_reciever;
     struct info_pack buffer_transmiter;
+    std::string server_img;
     // char buffer_reciever[1024];
     // Game game;
     Handeling_message manager;
