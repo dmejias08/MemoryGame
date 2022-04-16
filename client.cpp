@@ -51,6 +51,7 @@ void Client::conexion(struct info_pack position_btn){
         this->punish_points = ((struct info_pack*)&buffer_reciever)->punish_points;
         this->punish_player = ((struct info_pack*)&buffer_reciever)->punish_player;
         this->size = ((struct info_pack*)&buffer_reciever)->size;
+        std::cout<<this->size<<" Estoy en conexion size"<<std::endl;
         if(this->response == 0){
             std::cout<<"Cliente: falta presionar una carta "<<std::endl;
         }else if(this->response== 1){
@@ -66,6 +67,7 @@ void Client::conexion(struct info_pack position_btn){
 
 void Client::getImage(int indicator){
 
+    this->client_img.erase();
     sock = socket(AF_INET, SOCK_STREAM, 0);
     if ( sock < 0)
     {
@@ -90,12 +92,14 @@ void Client::getImage(int indicator){
     buffer_transmiter = this->image_request;
     /* send test sequences*/
     write(sock, (struct info_pack*)&buffer_transmiter, sizeof(buffer_transmiter));
+    std::cout<<"[Client]size: "<<this->size<<std::endl;
     char* temp = (char*)malloc(sizeof(char) * this->size);
     len_response = read(sock, temp, this->size);
-    for(int i = 0; i < len_response; i++){
-        this->client_img.push_back(*(temp+i));
-    }
-    std::cout << "Control: " << client_img.size() << std::endl;
+    std::cout<<"len response: "<<len_response<<std::endl;
+    // for(int i = 0; i < len_response; i++){
+    //     this->client_img.push_back(*(temp+i));
+    // }
+    // std::cout << "Control: " << client_img.size() << std::endl;
 
     if (len_response == -1)
     {
@@ -104,6 +108,12 @@ void Client::getImage(int indicator){
     else if (len_response == 0){
         printf("[CLIENT]: client socket closed \n\n");
         // break;
+    }else{
+        std::cout<<"Estoy leyendo imagen en client"<<std::endl;
+        for(int i = 0; i < len_response; i++){
+            this->client_img.push_back(*(temp+i));
+        }
+    std::cout << "Control: " << client_img.size() << std::endl;
     }
 
     /* close the socket */

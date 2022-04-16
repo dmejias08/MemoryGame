@@ -64,8 +64,10 @@ Server::Server(){
                 }else if(((struct info_pack *)&buffer_reciever)->type_message == 0){
                     write(new_socket,manager.manage_message((struct info_pack *)&buffer_reciever),sizeof(buffer_transmiter));
                 }else if(((struct info_pack *)&buffer_reciever)->type_message == 1){
+                    std::cout<<"estoy en server, image"<<std::endl;
                     this->server_img = manager.getImage();
-                    write(new_socket, server_img.data(), server_img.size());
+                    std::cout<<"size of data: "<<this->server_img.size()<<std::endl;
+                    write(new_socket, this->server_img.data(), this->server_img.size());
                 }
             }
         }else {

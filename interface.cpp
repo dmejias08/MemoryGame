@@ -33,18 +33,19 @@ public:
     int old_id;
     int clicks=1;
     Client client =  Client();
+    Client client2 = Client();
     MyFrame(int i , int j);
  
 private:
     void update_turn(int player);
     void updateLabel(int player, int points);
     const char* manage_response(int response);
-    void image_manager(int id, int response);
+    void image_manager(int id,std::string card, int response);
     void resetImage(int id, int responsess);
-    void showImage(int id);
+    void showImage(int id, std::string card);
     void OnClick(wxCommandEvent& event);
     void OnExit(wxCommandEvent& event);
-    int decodeImage(std::string image);
+    std::string decodeImage(std::string image, int type);
 };
 
 class MyFrameStart : public wxFrame
@@ -172,23 +173,23 @@ const char*  MyFrame::manage_response(int response){
             return "Watch out next turn";
         }
 }
-void MyFrame::image_manager(int id, int response){
+void MyFrame::image_manager(int id, std::string card, int response){
     if (this->clicks == 1){
-        showImage(id);
+        showImage(id, card);
         this->old_id = id;
         this->clicks = 2;
     }else{
-        showImage(id);
+        showImage(id, card);
         wxMessageBox(manage_response(response));
         resetImage(id, response);
         resetImage(this->old_id, response);
         this->clicks = 1;
     }
 }
-void MyFrame::showImage(int id){
+void MyFrame::showImage(int id, std::string card){
     for(int i=0; i<30; i++){
         if(this->vector_buttons[i]->GetId()==id){
-            this->vector_buttons[i]->SetBitmapLabel(wxBitmap("final.png", wxBITMAP_TYPE_PNG));
+            this->vector_buttons[i]->SetBitmapLabel(wxBitmap(card, wxBITMAP_TYPE_PNG));
             this->vector_buttons[i]->Enable(false);
         }
     }
@@ -239,14 +240,14 @@ void MyFrame::OnClick(wxCommandEvent& event)
     int winner = this->client.winner;
     int punish_points = this->client.punish_points;
     int punish_player = this->client.punish_player;
-    const char*  card;
+    // const char*  card;
     cout<<"Punishment "<< punish_player <<" "<<punish_points<<endl; 
 
     client.getImage(1);
     std::string img = this->client.client_img;
-    decodeImage(img);
+    std::string card = decodeImage(img, cardtype);
 
-    image_manager(id, response);
+    image_manager(id, card, response);
 
     // switch (cardtype)
     // {
@@ -290,8 +291,9 @@ void MyFrame::OnClick(wxCommandEvent& event)
 
 
 }
-int MyFrame::decodeImage(std::string image){
-    ofstream image_file("final.png", ios::out | ios::trunc);
+std::string MyFrame::decodeImage(std::string image, int type){
+    std::string type_s = std::to_string(type) + ".png";
+    ofstream image_file(type_s , ios::out | ios::trunc);
     char ch;
     while (image.size() > 0)
     {
@@ -302,7 +304,7 @@ int MyFrame::decodeImage(std::string image){
     }
     cout<<"Reloaded Successfully"<<endl;
     image_file.clear();
-    return 0;
+    return type_s;
 }
 
 

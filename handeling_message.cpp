@@ -39,13 +39,10 @@ struct info_pack* Handeling_message::manage_message(struct info_pack *message){
             message->punish_points = this->game->f_punish_points();
             message->id = result;
             message->card_type = card2.type;
-            this->img1.erase();
             this->img1 = card2.img;
-            message->size = this->img2.size();
+            message->size = this->img1.size();
             this->id_card1 =0;
             this->id_card2 =0;
-            this->id_card11 =0;
-            this->id_card22 =0;
             return message;
         }
     }
