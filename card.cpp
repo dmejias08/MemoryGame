@@ -35,7 +35,7 @@ void Card::get_image(int type){
     }
 }
 void Card::print(){
-    std::cout<<"Type: "<<this->type<<"Coordenadas"<<"("<<this->i<<","<<this->j<<")"<<" El status: "<<this->status<<std::endl;
+    std::cout<<"Type: "<<this->type<<" Coordenadas"<<"("<<this->i<<","<<this->j<<")"<<" El status: "<<this->status<<std::endl;
 }
 
 string Card::encodeImage(std::string picture){

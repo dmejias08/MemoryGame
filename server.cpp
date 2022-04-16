@@ -64,7 +64,7 @@ Server::Server(){
                 }else if(((struct info_pack *)&buffer_reciever)->type_message == 0){
                     write(new_socket,manager.manage_message((struct info_pack *)&buffer_reciever),sizeof(buffer_transmiter));
                 }else if(((struct info_pack *)&buffer_reciever)->type_message == 1){
-                    server_img = manager.getImage();
+                    this->server_img = manager.getImage();
                     write(new_socket, server_img.data(), server_img.size());
                 }
             }

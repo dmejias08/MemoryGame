@@ -58,7 +58,7 @@ public:
  
 private:
 
-    void OnClick(wxCommandEvent& event);
+    void OnStart(wxCommandEvent& event);
     void OnSave(wxCommandEvent& event);
 };
  
@@ -71,7 +71,7 @@ bool MyApp::OnInit()
     return true;
 }
  
-MyFrameStart ::MyFrameStart() :wxFrame(NULL, wxID_ANY, "Memory Game Start",wxDefaultPosition, wxSize(500, 500)){
+MyFrameStart::MyFrameStart() :wxFrame(NULL, wxID_ANY, "Memory Game Start",wxDefaultPosition, wxSize(500, 500)){
     wxStaticText *label1 = new wxStaticText(this, wxID_ANY, wxT("Welcome to Memory Game"),wxPoint(150,20) );
     wxStaticText *label2 = new wxStaticText(this, wxID_ANY, wxT("Write your nicknames"),wxPoint(77,100) );
     wxStaticText *label3 = new wxStaticText(this, wxID_ANY, wxT("Player 1"),wxPoint(5,150) );
@@ -82,7 +82,7 @@ MyFrameStart ::MyFrameStart() :wxFrame(NULL, wxID_ANY, "Memory Game Start",wxDef
     wxButton *btn_save =new wxButton(this,2, wxT("SAVE PLAYERS"), wxPoint(300,300));
     btn_start->SetFocus();
     btn_save->SetFocus();
-    Connect(1, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MyFrameStart::OnClick));
+    Connect(1, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MyFrameStart::OnStart));
     Connect(2, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MyFrameStart::OnSave));
 }
 
@@ -98,7 +98,7 @@ void MyFrameStart::OnSave(wxCommandEvent& event){
     
 }
 
-void MyFrameStart::OnClick(wxCommandEvent& event){
+void MyFrameStart::OnStart(wxCommandEvent& event){
 
     MyFrame *frame = new MyFrame(6,5);
     frame->label_play1->SetLabel(this->player1);
@@ -107,10 +107,7 @@ void MyFrameStart::OnClick(wxCommandEvent& event){
     frame->player2 = this->player2;
     frame->Show(true);
     Close(true);
-
-
 }
-
 
 MyFrame::MyFrame(int i, int j ): wxFrame(NULL, wxID_ANY, "Memory Game",wxDefaultPosition, wxSize(1000, 800))
 {

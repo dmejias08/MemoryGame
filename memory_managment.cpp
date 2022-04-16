@@ -128,7 +128,7 @@ void Memory_managment::generate_vector(int size){
     int total = memory_consumption();
     cout<<"SERVER INTERFACE"<<endl;
     cout<<"**************************************************************************************************"<<endl;
-    cout<<"Memory usage: "<<total<<" the lenght of the vector: "<<this->vector_card.size()<<endl;
+    cout<<"Memory usage: "<<total<<"bits"<<"   The lenght of the vector: "<<this->vector_card.size()<<endl;
     cout<<"**************************************************************************************************"<<endl;
     cout<<"Page hits: "<<this->page_hits<<" "<<"Page faults: "<<this->page_faults<<endl;
     cout<<"**************************************************************************************************"<<endl;
@@ -139,6 +139,7 @@ int Memory_managment::memory_consumption(){
     int size = this->vector_card.size();
     for(int i = 0; i < size ; i++){
         total += sizeof(this->vector_card[i]);
+        total += this->vector_card[i].img.size();
     }
     return total;
 }

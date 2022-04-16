@@ -87,16 +87,15 @@ void Client::getImage(int indicator){
         std::cout<<"\n Connection to server succesfully \n"<<std::endl;
     }
     this->image_request.type_message = indicator;
-
+    buffer_transmiter = this->image_request;
     /* send test sequences*/
     write(sock, (struct info_pack*)&buffer_transmiter, sizeof(buffer_transmiter));
     char* temp = (char*)malloc(sizeof(char) * this->size);
     len_response = read(sock, temp, this->size);
     for(int i = 0; i < len_response; i++){
         this->client_img.push_back(*(temp+i));
-    std::cout <<"estoy en el ciclo "<< std::endl;
     }
-    std::cout << "Control: " << client_img << std::endl;
+    std::cout << "Control: " << client_img.size() << std::endl;
 
     if (len_response == -1)
     {

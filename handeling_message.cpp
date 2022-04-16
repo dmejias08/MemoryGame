@@ -39,7 +39,8 @@ struct info_pack* Handeling_message::manage_message(struct info_pack *message){
             message->punish_points = this->game->f_punish_points();
             message->id = result;
             message->card_type = card2.type;
-            this->img2 = card2.img;
+            this->img1.erase();
+            this->img1 = card2.img;
             message->size = this->img2.size();
             this->id_card1 =0;
             this->id_card2 =0;
@@ -76,11 +77,13 @@ int Handeling_message::check_equals(int id1, Card card2){
     return 2;
 }
 std::string Handeling_message::getImage(){
-    if(this->id_card11 == 0){
+    // if(this->id_card11 == 0){
+    //     this->id_card11 = 1;
         return this->img1;
-    }else if(this->id_card22 == 0){
-        return this->img2;
-    }
+    // }else if(this->id_card22 == 0){
+    //     this->id_card22 = 1;
+    //     return this->img2;
+    // }
 }
 
 
