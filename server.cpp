@@ -1,7 +1,10 @@
 
 #include "server.h"
 #include "game.h"
-
+/**
+ * @brief Construct a new Server:: Server object
+ * 
+ */
 Server::Server(){
     server= socket(AF_INET, SOCK_STREAM, 0);
     if(server < 0){
@@ -12,6 +15,7 @@ Server::Server(){
 
     //Cleaning struct
     memset(&server_address,0, sizeof(server_len));
+    
     //Initialize struct 
     server_address.sin_family = AF_INET;
     server_address.sin_addr.s_addr = inet_addr(server_ip);
@@ -54,17 +58,17 @@ Server::Server(){
                     break;
                 }else if (len_request==0){//did not send 
                     std::cout<<"Socket closed"<<std::endl;
-                    // close(new_socket);
                     break;
                 }else if(((struct info_pack *)&buffer_reciever)->type_message == -1){
                     delete this->manager.memory;
                     close(new_socket);
                     this->flag = 1;
                     break;
+                    /*It send the info needed when client send info of button*/
                 }else if(((struct info_pack *)&buffer_reciever)->type_message == 0){
                     write(new_socket,manager.manage_message((struct info_pack *)&buffer_reciever),sizeof(buffer_transmiter));
+                /*It sends current image when client needs it*/
                 }else if(((struct info_pack *)&buffer_reciever)->type_message == 1){
-                    std::cout<<"estoy en server, image"<<std::endl;
                     this->server_img = manager.getImage();
                     std::cout<<"size of data: "<<this->server_img.size()<<std::endl;
                     write(new_socket, this->server_img.data(), this->server_img.size());

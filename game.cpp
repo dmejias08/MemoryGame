@@ -3,7 +3,12 @@
 Game::Game(){
 
 }
-
+/**
+ * @brief it assigns points for each player 
+ * 
+ * @param response ii defines if the player had a match or not 
+ * @return int number of points 
+ */
 int Game::assign_points(int response){
     this->punish_player = 0;
     this->punish_points = 0;
@@ -48,6 +53,10 @@ int Game::assign_points(int response){
         return this->points_player2; 
     }
 }
+/**
+ * @brief when there is none cards left it defines the winner 
+ * 
+ */
 void Game::check_winner(){
     if(this->points_player1 > this->points_player2){
         this->winner = 1;
@@ -55,7 +64,11 @@ void Game::check_winner(){
         this->winner =2;
     }
 }
-
+/**
+ * @brief it sets advantages to each player 
+ * 
+ * @param current_player 
+ */
 void Game::check_powerups(int current_player){
     if(current_player == 1){
         if(this->player1_wins == 2){

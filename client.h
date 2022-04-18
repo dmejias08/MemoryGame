@@ -36,7 +36,6 @@ class Client{
     struct info_pack buffer_reciever;
     struct info_pack buffer_transmiter;
 
-    // char buffer_reciever[1024];
     
     public:
     std::string client_img;
@@ -49,7 +48,6 @@ class Client{
     int points;
     int player_points;
     int punish_player;
-    // char img; 
     struct info_pack request;
     struct info_pack image_request;
     Client();

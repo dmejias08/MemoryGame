@@ -64,14 +64,23 @@ private:
 };
  
 wxIMPLEMENT_APP(MyApp);
- 
+
+/**
+ * @brief It inicialize the first frame
+ * 
+ * @return true 
+ * @return false 
+ */
 bool MyApp::OnInit()
 {
     MyFrameStart *frame1 = new MyFrameStart();
     frame1->Show(true);
     return true;
 }
- 
+/**
+ * @brief Construct a new My Frame Start:: My Frame Start object
+ * It sets the basic elements in the firts panel
+ */
 MyFrameStart::MyFrameStart() :wxFrame(NULL, wxID_ANY, "Memory Game Start",wxDefaultPosition, wxSize(500, 500)){
     wxStaticText *label1 = new wxStaticText(this, wxID_ANY, wxT("Welcome to Memory Game"),wxPoint(150,20) );
     wxStaticText *label2 = new wxStaticText(this, wxID_ANY, wxT("Write your nicknames"),wxPoint(77,100) );
@@ -87,6 +96,11 @@ MyFrameStart::MyFrameStart() :wxFrame(NULL, wxID_ANY, "Memory Game Start",wxDefa
     Connect(2, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MyFrameStart::OnSave));
 }
 
+/**
+ * @brief It saves the player's names on gobal variables to later use 
+ * 
+ * @param event 
+ */
 void MyFrameStart::OnSave(wxCommandEvent& event){
     if (this->tc1->IsEmpty()==false && this->tc2->IsEmpty()== false){
         this->player1 = this->tc1->GetValue();
@@ -98,7 +112,11 @@ void MyFrameStart::OnSave(wxCommandEvent& event){
     }
     
 }
-
+/**
+ * @brief it saves the player's name on frame and inicialize it. Closes the current frame 
+ * 
+ * @param event 
+ */
 void MyFrameStart::OnStart(wxCommandEvent& event){
 
     MyFrame *frame = new MyFrame(6,5);
@@ -109,12 +127,18 @@ void MyFrameStart::OnStart(wxCommandEvent& event){
     frame->Show(true);
     Close(true);
 }
-
+/**
+ * @brief Construct a new My Frame:: My Frame object
+ * 
+ * @param i dimensions of interface 
+ * @param j dimensions of interface 
+ */
 MyFrame::MyFrame(int i, int j ): wxFrame(NULL, wxID_ANY, "Memory Game",wxDefaultPosition, wxSize(1000, 800))
 {
     int x = 5;
     int y = 5;
     int name = 0;
+    /* Creates a vector of buttons that saves its position*/
     for(int m = 1; m < i+1 ; m++){
         for (int n = 1; n < j+1 ; n++){
             wxBitmapButton *btn =new wxBitmapButton(this, m*10 +n , wxBitmap("assets/card.png", wxBITMAP_TYPE_PNG), wxPoint(x, y), wxSize(120,120));
@@ -127,6 +151,7 @@ MyFrame::MyFrame(int i, int j ): wxFrame(NULL, wxID_ANY, "Memory Game",wxDefault
         y = y + 120;
     }
     Centre();
+    /*Sets the basic elements: players label and points */
     wxStaticText *label_play1 = new wxStaticText(this, 101, wxT("Players "),wxPoint(700,50));
     wxStaticText *lb_points = new wxStaticText(this, 104, wxT("Points"),wxPoint(900,50) );
     this->lb_play1_points = new wxStaticText(this, 103, wxT("0"),wxPoint(900,100) );
@@ -144,8 +169,13 @@ MyFrame::MyFrame(int i, int j ): wxFrame(NULL, wxID_ANY, "Memory Game",wxDefault
     Connect(100, wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MyFrame::OnExit));
     wxMessageBox("Each turn your name changes color. [Red indicates your turn]");
 }
-
+/**
+ * @brief it changes the color of each player label to indicate turn 
+ * 
+ * @param player 
+ */
 void MyFrame::update_turn(int player){
+    /*red indicates your turn*/
     if (player == 1){
         this->label_play1->SetForegroundColour( wxColor(*wxRED));
         this->label_play2->SetForegroundColour( wxColor(*wxBLUE));
@@ -154,16 +184,21 @@ void MyFrame::update_turn(int player){
         this->label_play1->SetForegroundColour( wxColor(*wxBLUE));
     }
 }
+/**
+ * @brief it updates each player's points 
+ * 
+ * @param player current player 
+ * @param points player's points 
+ */
 void MyFrame::updateLabel(int player, int points){
     std::string point = std::to_string(points);
-    cout<<"[puntos]"<<point<<endl;
-    cout<<"[puntos]"<<points<<endl;
     if(player == 1){
         this->lb_play1_points->SetLabel(point);
     }else if(player == 2){
         this->lb_play2_points->SetLabel(point);
     }
 }
+
 const char*  MyFrame::manage_response(int response){
         if(response == 0){
             return "Falta presionar una carta";
@@ -173,12 +208,19 @@ const char*  MyFrame::manage_response(int response){
             return "Watch out next turn";
         }
 }
+/**
+ * @brief It manages to show each image and define when you have two images shown 
+ * 
+ * @param id button's id 
+ * @param card name of image address
+ * @param response gets if it is a match 
+ */
 void MyFrame::image_manager(int id, std::string card, int response){
-    if (this->clicks == 1){
+    if (this->clicks == 1){ // just one image shown 
         showImage(id, card);
         this->old_id = id;
         this->clicks = 2;
-    }else{
+    }else{ // two images shown 
         showImage(id, card);
         wxMessageBox(manage_response(response));
         resetImage(id, response);
@@ -186,6 +228,12 @@ void MyFrame::image_manager(int id, std::string card, int response){
         this->clicks = 1;
     }
 }
+/**
+ * @brief it gets the image of the button in vector and changes it
+ * 
+ * @param id button's id 
+ * @param card image 
+ */
 void MyFrame::showImage(int id, std::string card){
     for(int i=0; i<30; i++){
         if(this->vector_buttons[i]->GetId()==id){
@@ -194,6 +242,12 @@ void MyFrame::showImage(int id, std::string card){
         }
     }
 }
+/**
+ * @brief if there is a match it disables the buttons and change image, if not it resets it as it was. 
+ * 
+ * @param id button's id 
+ * @param response flag
+ */
 void MyFrame::resetImage(int id, int response){
     for(int i=0; i<30; i++){
         if(this->vector_buttons[i]->GetId()==id){
@@ -207,6 +261,7 @@ void MyFrame::resetImage(int id, int response){
         }
     }
 }
+
 void MyFrame::OnExit(wxCommandEvent& event)
 {
     std::cout<<"estoy en onExit"<<std::endl;
@@ -216,7 +271,11 @@ void MyFrame::OnExit(wxCommandEvent& event)
     client.conexion(request);
     Close(true);
 }
-
+/**
+ * @brief 
+ * 
+ * @param event 
+ */
 void MyFrame::OnClick(wxCommandEvent& event)
 {
     struct info_pack request;
@@ -229,9 +288,9 @@ void MyFrame::OnClick(wxCommandEvent& event)
 
     std::cout<<"es id de boton "<<id<<std::endl;
 
-
+    /*It sets the conexions between server and client*/
     client.conexion(request);
-
+    /* First conexion sends the info of button and gets response*/
     int cardtype = this->client.card_type;
     int response = this->client.response;
     int points = this->client.points;
@@ -240,43 +299,18 @@ void MyFrame::OnClick(wxCommandEvent& event)
     int winner = this->client.winner;
     int punish_points = this->client.punish_points;
     int punish_player = this->client.punish_player;
-    // const char*  card;
-    cout<<"Punishment "<< punish_player <<" "<<punish_points<<endl; 
 
+    /*Second conexion gets the image */
     client.getImage(1);
     std::string img = this->client.client_img;
     std::string card = decodeImage(img, cardtype);
 
+    /*Sets labels and points*/
     image_manager(id, card, response);
-
-    // switch (cardtype)
-    // {
-    // case 1:
-    //     card = "assets/Dog.png";
-    //     image_manager(id ,card, response);
-    //     break;
-    // case 2:
-    //     card = "assets/Cat.png";
-    //     image_manager(id, card, response);
-    //     break;
-    // case 3:
-    //     card = "assets/Cow.png";
-    //     image_manager(id, card, response );
-    //     break;
-    // case 4:
-    //     card = "assets/Pig.png";
-    //     image_manager(id, card, response );
-    //     break;
-    // case 5:
-    //     card = "assets/Hen.png";
-    //     image_manager(id, card, response );
-    //     break;
-    // default:
-    //     wxMessageBox("[Connection error] Restart the game");   
-    // }
-
     update_turn(this->current_player);
     updateLabel(point_player, this->client.points);
+
+    /*Sets punishments due to power ups and defines winner according to response from server*/
     if(punish_player != 0 ){
         wxMessageBox("Furious player, you have to be careful");
         updateLabel(punish_player, punish_points);
@@ -291,6 +325,13 @@ void MyFrame::OnClick(wxCommandEvent& event)
 
 
 }
+/**
+ * @brief It decodes the base 64 string and turns it into png image 
+ * 
+ * @param image base 64 
+ * @param type number of each animal 
+ * @return std::string 
+ */
 std::string MyFrame::decodeImage(std::string image, int type){
     std::string type_s = std::to_string(type) + ".png";
     ofstream image_file(type_s , ios::out | ios::trunc);
