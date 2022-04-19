@@ -104,7 +104,7 @@ void Client::getImage(int indicator){
 
     if (len_response == -1)
     {
-        continue;
+        std::cout<<"[Client] could not read message"<<std::endl;
     }
     else if (len_response == 0){
         printf("[CLIENT]: client socket closed \n\n");
