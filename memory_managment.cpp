@@ -27,6 +27,8 @@ Memory_managment::Memory_managment(){
     cout<<"vector"<<endl;
     generate_vector(10);
     print_vector();
+    cout<<"Disk"<<endl;
+    print_file();
 }
 /**
  * @brief Get a card object from disk 
