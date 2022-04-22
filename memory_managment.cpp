@@ -24,7 +24,7 @@ struct simple_card
 Memory_managment::Memory_managment(){
     create_file();
     cout<<"file created"<<endl;
-    cout<<"vector"<<endl;
+    cout<<"memory"<<endl;
     generate_vector(10);
     print_vector();
     cout<<"Disk"<<endl;
@@ -83,7 +83,7 @@ Card Memory_managment::get_card(int i, int j){
     int limit = this->size_vector;
     for(int n = 0; n< limit; n++){
         if (this->vector_card[n].i == i && this->vector_card[n].j == j){ // found vector 
-            cout<<"Found object in vector: ";
+            cout<<"Found object in memory: ";
             this->page_hits += 1;
             this->vector_card[n].print();
             this->flag= 0;
@@ -97,7 +97,7 @@ Card Memory_managment::get_card(int i, int j){
     int total = memory_consumption();
     cout<<"SERVER INTERFACE"<<endl;
     cout<<"**************************************************************************************************"<<endl;
-    cout<<"Memory usage: "<<total<<" bytes"<<"   The lenght of the vector: "<<this->vector_card.size()<<endl;
+    cout<<"Memory usage: "<<total<<" bytes"<<"   Cards in memory: "<<this->vector_card.size()<<endl;
     cout<<"**************************************************************************************************"<<endl;
     cout<<"Page hits: "<<this->page_hits<<" "<<"Page faults: "<<this->page_faults<<endl;
     cout<<"**************************************************************************************************"<<endl;
@@ -130,7 +130,7 @@ Card Memory_managment::replace(int i, int j){
     this->vector_card.push_back(card); // save it in vector 
     cout<<"New object is: "<<endl;
     card.print();
-    cout<<"New vector is: "<<endl;
+    cout<<"New cards in memory : "<<endl;
     this->print_vector();
     return card;
 }
@@ -166,7 +166,7 @@ void Memory_managment::generate_vector(int size){
     int total = memory_consumption();
     cout<<"SERVER INTERFACE"<<endl;
     cout<<"**************************************************************************************************"<<endl;
-    cout<<"Memory usage: "<<total<<" bytes"<<"   The lenght of the vector: "<<this->vector_card.size()<<endl;
+    cout<<"Memory usage: "<<total<<" bytes"<<"   Cards in memory: "<<this->vector_card.size()<<endl;
     cout<<"**************************************************************************************************"<<endl;
     cout<<"Page hits: "<<this->page_hits<<" "<<"Page faults: "<<this->page_faults<<endl;
     cout<<"**************************************************************************************************"<<endl;
@@ -270,6 +270,6 @@ void Memory_managment::shuffle(){
     this->card_unused = this->card_unused - 2;
     this->size_vector = this->card_unused / 3;
     generate_vector(this->size_vector);
-    cout<< "New vector despues de suffle "<<endl;
+    cout<< "Cards in memory after shuffle "<<endl;
     print_vector();
 }

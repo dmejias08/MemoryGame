@@ -11,7 +11,7 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 #define PORT 8000
-#define server_ip "192.168.0.40"
+#define server_ip "192.168.100.49"
 
 struct info_pack
 {

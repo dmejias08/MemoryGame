@@ -65,8 +65,6 @@ string Card::encodeImage(std::string picture){
         ch = image.get();
         img.push_back(ch);
     }
-    cout<<"Loaded Successfully"<<endl;
-
     image.close();
     return img;
 }
